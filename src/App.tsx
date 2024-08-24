@@ -1,15 +1,19 @@
+import "./App.css";
+import createApolloClient from "../src/graphql/apolliClient";
+import { RouterProvider } from "react-router-dom";
 
-import './App.css'
-import { CardWithForm } from "./components/ui/login_card"
+import useAppRouter from "./routers/main-routes";
+import { ApolloProvider } from "@apollo/client";
 
 function App() {
-  
-  return (
-    <>
-   <CardWithForm/>
+  const apolloClient = createApolloClient();
+  const router = useAppRouter();
 
-    </>
-  )
+  return (
+    <ApolloProvider client={apolloClient}>
+      <RouterProvider router={router} />
+    </ApolloProvider>
+  );
 }
 
-export default App
+export default App;
