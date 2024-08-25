@@ -30,7 +30,7 @@ const chartConfig = {
 
 export function PostDashboard({ chartData }: { chartData: any }) {
   return (
-    <Card className="w-[35%] shadow-none">
+    <Card className="w-[40%] shadow-none">
       <CardHeader className="items-center pb-4">
         <CardTitle>Drivers Insights</CardTitle>
       </CardHeader>

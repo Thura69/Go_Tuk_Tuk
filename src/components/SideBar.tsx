@@ -30,10 +30,10 @@ export const SideBar = () => {
         open && "w-[250px]"
       )}
     >
-      <div className="p-3 bg-emerald-600 gap-5  flex items-center justify-start">
+      <div className="p-3 bg-emerald-700 gap-5  flex items-center justify-start">
         <Button
           onClick={() => setOpen((prev) => !prev)}
-          className=" rounded-md border-yellow-500 p-0 w-[50px] h-[50px]  border-[1px]  bg-transparent"
+          className=" rounded-md bg-blue-700 border-yellow-500 p-0 w-[50px] h-[50px]  border-[1px]  bg-transparent"
           type="button"
           variant={"outline"}
         >

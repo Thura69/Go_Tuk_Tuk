@@ -1,35 +1,5 @@
 import { gql } from "@apollo/client";
 
-export const DASHBOARD_ALL_CUSTOMERS = gql`
-  query MyQuery {
-    customers_aggregate(order_by: { created_at: asc }) {
-      aggregate {
-        count(columns: created_at)
-      }
-    }
-  }
-`;
-
-export const DASHBOARD_ALL_DRIVERS = gql`
-  query MyQuery {
-    drivers_aggregate(order_by: { created_at: asc }) {
-      aggregate {
-        count
-      }
-    }
-  }
-`;
-
-export const DASHBOARD_ALL_VEHICLE = gql`
-  query MyQuery {
-    vehicle_types_aggregate(order_by: { created_at: asc }) {
-      aggregate {
-        count
-      }
-    }
-  }
-`;
-
 export const GET_ALL_DRIVERS = gql`
   query MyQuery {
     drivers(order_by: { created_at: asc }) {
