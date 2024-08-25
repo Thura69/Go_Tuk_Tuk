@@ -58,8 +58,8 @@ export const DeleteConfirm: FC<AlertModalProps> = ({
         <AlertDialogHeader>
           <AlertDialogDescription>
             <div className="mx-auto flex flex-col items-center space-y-3">
-              <div className="flex p-2 justify-center items-center rounded-full bg-danger-200">
-                <TrashIcon className="w-[33px] h-[33px]"  />
+              <div className="flex p-2 justify-center bg-red-100 items-center rounded-full bg-danger-200">
+                <TrashIcon className="w-[24px] h-[24px]"  />
               </div>
               <p className="text-center text-[#E03137] text-md font-light">
                 {title}

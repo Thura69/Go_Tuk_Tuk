@@ -2,9 +2,10 @@ import { cn } from "../../lib/utils";
 
 type ActiveBadgeProps = {
   rounded?: boolean;
+  type: "active" | "verified";
 };
 
-const InactiveBadge: React.FC<ActiveBadgeProps> = ({ rounded = false }) => {
+const InactiveBadge: React.FC<ActiveBadgeProps> = ({ rounded = false,type }) => {
   return (
     <div
       className={cn(
@@ -12,7 +13,9 @@ const InactiveBadge: React.FC<ActiveBadgeProps> = ({ rounded = false }) => {
         rounded && "rounded-[100px] p-2 w-auto"
       )}
     >
-      <span className="text-xs text-danger-500 font-medium">Inactive</span>
+      <span className="text-xs text-danger-500 font-medium">
+      {type === "active" ? "Inactive" : "Unverified"}
+      </span>
     </div>
   );
 };

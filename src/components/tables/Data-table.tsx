@@ -43,7 +43,8 @@ const TBLRow = ({ row }: { row: Row<any> }) => {
         const nameCell =
           cell.column.id.toLowerCase() === "select".toLowerCase();
         const action = cell.column.id.toLowerCase() === "action".toLowerCase();
-        const status = cell.column.id.toLowerCase() === "disabled".toLowerCase();
+        const status =
+          cell.column.id.toLowerCase() === "disabled".toLowerCase();
         const isActive =
           cell.column.id.toLowerCase() === "isActive".toLowerCase();
 
@@ -95,6 +96,9 @@ export function DataTable<TData, TValue>({
                 const statusCell =
                   header.column.id === "disabled" ||
                   header.column.id === "IsActive";
+
+                const disabledCell = header.column.id === "profile_verified";
+
                 return (
                   <TableHead
                     key={header.id}
@@ -104,7 +108,8 @@ export function DataTable<TData, TValue>({
                         header.id === "Department_ID") &&
                         "w-[50px] text-center ",
                       nameCell && "pl-0",
-                      statusCell && "sm:w-[180px] w-[120px]"
+                      statusCell && "sm:w-[180px w-[120px]",
+                      disabledCell && "sm:w-[180px w-[120px]"
                     )}
                   >
                     {header.isPlaceholder

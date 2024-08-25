@@ -6,55 +6,96 @@ import {
   CardTitle,
 } from "../../components/ui/card";
 import { useQuery } from "@apollo/client";
-import { DASHBOARD_ALL_USERS } from "../../graphql/quires";
-import { UserIcon } from "lucide-react";
-import { cn } from "../../lib/utils";
+import { FilePlus2, Handshake, Users2 } from "lucide-react";
+import {
+  cn,
+  getPostBarChart,
+  generateThreeMonthChartData,
+} from "../../lib/utils";
 import { PostDashboard } from "../../components/dashboard/posts-dashboard";
+import { ReactNode, useEffect, useState } from "react";
+import {
+  DASHBOARD_ALL_CUSTOMERS,
+  DASHBOARD_ALL_DRIVERS,
+  DASHBOARD_ALL_VEHICLE,
+  GET_ALL_CUSTOMERS,
+  GET_ALL_DRIVERS,
+} from "../../graphql/kiloTaxi";
 import { UsersAndPartners } from "../../components/dashboard/users-partners";
 
-const date = new Date();
-const startDate = new Date(date.getFullYear(), date.getMonth(), 1);
-const endDate = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-
-const SAMPLEDATA = [
-  {
-    name: "Users",
-    count: 100,
-    color: "#FFE2E6",
-  },
-  {
-    name: "Partners",
-    count: 10,
-    color: "#FFF3DE",
-  },
-  {
-    name: "Posts",
-    count: 80,
-    color: "#DCFCE6",
-  },
-  {
-    name: "Money",
-    count: 80,
-    color: "#F4E7FF",
-  },
-];
+type CardData = {
+  name: string;
+  icon: ReactNode;
+  count: number;
+  color: string;
+};
 
 export const Dashboard = () => {
-  const { data: users } = useQuery(DASHBOARD_ALL_USERS, {
-    variables: { startDate, endDate },
+  const [postData, setPostData] = useState(null);
+
+  const { data: CUSTOMERDATA } = useQuery(DASHBOARD_ALL_CUSTOMERS, {
     fetchPolicy: "network-only",
   });
 
-  console.log(users);
+  const { data: DRIVERSDATA } = useQuery(DASHBOARD_ALL_DRIVERS, {
+    fetchPolicy: "network-only",
+  });
 
-  // const { data: partners } = useQuery(DASHBOARD_ALL_PARTNERS, {
-  //   variables: { startDate, endDate },
-  //   fetchPolicy: "network-only",
-  // });
-  // const { data: posts } = useQuery(DASHBOARD_ALL_POSTS, {
-  //   variables: { startDate, endDate },
-  //   fetchPolicy: "network-only",
-  // });
+  const { data: VECICLEDATA } = useQuery(DASHBOARD_ALL_VEHICLE, {
+    fetchPolicy: "network-only",
+  });
+
+  const { data: ALLDRIVERS } = useQuery(GET_ALL_DRIVERS, {
+    fetchPolicy: "network-only",
+  });
+
+  const { data: ALLCUSTOMERS } = useQuery(GET_ALL_CUSTOMERS, {
+    fetchPolicy: "network-only",
+  });
+
+  const [cardData, setCardData] = useState<CardData[]>([]);
+  const [data, setData] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (
+      CUSTOMERDATA &&
+      DRIVERSDATA &&
+      VECICLEDATA &&
+      ALLDRIVERS &&
+      ALLCUSTOMERS
+    ) {
+      const dataChart = generateThreeMonthChartData(
+        ALLCUSTOMERS?.customers,
+        ALLDRIVERS?.drivers
+      );
+      setData(dataChart);
+
+      const postBarChart = getPostBarChart(ALLDRIVERS);
+
+      setPostData(postBarChart);
+
+      setCardData([
+        {
+          name: "Customers",
+          icon: <Users2 />,
+          count: CUSTOMERDATA.customers_aggregate.aggregate.count,
+          color: "rgba(151,71,254,0.88)",
+        },
+        {
+          name: "Drivers",
+          icon: <Handshake />,
+          count: DRIVERSDATA.drivers_aggregate.aggregate.count,
+          color: "rgba(101,194,43,0.92)",
+        },
+        {
+          name: "Vehicles Types",
+          icon: <FilePlus2 />,
+          count: VECICLEDATA.vehicle_types_aggregate.aggregate.count,
+          color: "rgba(26,29,207,0.91)",
+        },
+      ]);
+    }
+  }, [CUSTOMERDATA, DRIVERSDATA, VECICLEDATA, ALLDRIVERS, ALLCUSTOMERS]);
 
   return (
     <div className="p-[30px] space-y-4 min-h-[calc(100svh-81px)]  bg-gray-100">
@@ -65,15 +106,14 @@ export const Dashboard = () => {
             Monitoring Go Tuk Tuk Insights
           </p>
           <div className="flex gap-6">
-            {SAMPLEDATA.map((e, index) => (
+            {cardData.map((e, index) => (
               <Card
                 key={index}
                 className={cn(
                   `bg-[#F4E7FF] text-[#423F7A] rounded-2xl shadow border-none w-[33%]`,
-                  e.name === "Users" && "bg-[#fa919f]",
-                  e.name === "Partners" && "bg-[#f6d499]",
-                  e.name === "Posts" && "bg-[#9efebd]",
-                  e.name === "Money" && "bg-[#cd99f8]"
+                  e.name === "Customers" && "bg-[#fa919f]",
+                  e.name === "Drivers" && "bg-[#f6d499]",
+                  e.name === "Vehicles" && "bg-[#9efebd]"
                 )}
               >
                 <CardHeader>
@@ -81,13 +121,12 @@ export const Dashboard = () => {
                     <div
                       className={cn(
                         " inline-block shadow p-3 bg-[#FFE2E6] rounded-full",
-                        e.name === "Users" && "bg-[#fab3be]",
-                        e.name === "Partners" && "bg-[#f9deb0]",
-                        e.name === "Posts" && "bg-[#a9fbc3]",
-                        e.name === "Money" && "bg-[#d6a5fd]"
+                        e.name === "Customers" && "bg-[#fab3be]",
+                        e.name === "Drivers" && "bg-[#f9deb0]",
+                        e.name === "Vehicles" && "bg-[#a9fbc3]"
                       )}
                     >
-                      <UserIcon />
+                      {e.icon}
                     </div>
                   </CardTitle>
                 </CardHeader>
@@ -101,9 +140,9 @@ export const Dashboard = () => {
             ))}
           </div>
         </div>
-        <PostDashboard />
+        <PostDashboard chartData={postData} />
       </div>
-      <UsersAndPartners />
+      <UsersAndPartners chartData={data} />
     </div>
   );
 };

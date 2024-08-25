@@ -1,24 +1,34 @@
 import { ColumnDef } from "@tanstack/react-table";
 import InactiveBadge from "../common/InactiveBadge";
 import { useBoolean } from "usehooks-ts";
-import { cn } from "../../lib/utils";
+import { cn, getRelativeTime } from "../../lib/utils";
 import ActiveBadge from "../common/ActiveBadge";
 import { useState } from "react";
 import CellAction from "../common/CellAction";
 import { DeleteConfirm } from "../common/DeleteConfirmation";
+import EmployeeModal from "../common/Modal";
+import { UserForm } from "./user-form";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { useMutation } from "@apollo/client";
+import {
+  DELETE_DRIVER_BY_ID,
+} from "../../graphql/kiloTaxi";
 
 export type Section = {
-  Department_Name: string;
-  section_name: string;
-  description: string;
-  status: boolean;
-  Total_Employees: number;
+  __typename: string;
+  name: string;
+  address: string;
+  profile_picture_url: string;
+  balance: number;
+  birth_date: null;
+  created_at: string;
+  disabled: false;
+  driver_id: string;
 };
 
 export const columns: ColumnDef<Section>[] = [
   {
-    id: "select",
+    id: "id",
   },
   {
     accessorKey: "name",
@@ -35,63 +45,100 @@ export const columns: ColumnDef<Section>[] = [
     header: () => {
       return (
         <section className={cn("flex  justify-start  items-center gap-2")}>
-          <h3>Profile Picture</h3>
+          <h3>Photo</h3>
         </section>
       );
     },
     cell: ({ row }) => {
-      const pic = row.getValue("profile_picture_url") as string;
-
+      const PICURL = row.getValue("profile_picture_url") as string;
       return (
-        <>
-          {status ? (
+        <div className="">
+          {PICURL ? (
             <Avatar>
-            <AvatarImage src={pic} alt="@shadcn" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
+              <AvatarImage src={PICURL} alt="@shadcn" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
           ) : (
             <Avatar>
-              <AvatarImage src={pic} alt="@shadcn" />
+              <AvatarImage src={PICURL} alt="@shadcn" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           )}
-        </>
+        </div>
       );
     },
   },
   {
-    accessorKey: "phone",
+    accessorKey: "address",
     header: () => {
       return (
         <section className={cn("flex  justify-start  items-center gap-2")}>
-          <h3>Phone</h3>
+          <h3>Address</h3>
         </section>
+      );
+    },
+  },
+
+  {
+    accessorKey: "balance",
+    header: () => {
+      return (
+        <section className={cn("flex  justify-start  items-center gap-2")}>
+          <h3>Balance</h3>
+        </section>
+      );
+    },
+  },
+  {
+    accessorKey: "birth_date",
+    header: () => {
+      return (
+        <section className={cn("flex  justify-start  items-center gap-2")}>
+          <h3>Birthday</h3>
+        </section>
+      );
+    },
+  },
+  {
+    accessorKey: "created_at",
+    header: ({}) => {
+      return (
+        <section className={cn("flex  justify-start  items-center gap-2")}>
+          <h3>Created Time</h3>
+        </section>
+      );
+    },
+    cell: ({ row }) => {
+      const dateString = row.getValue("created_at") as string;
+
+      const relativeTime = getRelativeTime(dateString);
+
+      return (
+        <div className="">
+          <h3>{relativeTime}</h3>
+        </div>
       );
     },
   },
   {
     accessorKey: "disabled",
-    header: ({ }) => {
+    header: ({}) => {
       return (
         <section className={cn("flex  justify-start  items-center gap-2")}>
-          <h3>Status</h3>
+          <h3>Disabled</h3>
         </section>
       );
     },
     cell: ({ row }) => {
-      const status = row.getValue("status") as string;
+      const status = row.getValue("disabled") as string;
       return (
-        <div className="">{status ? <ActiveBadge /> : <InactiveBadge />}</div>
-      );
-    },
-  },
-  {
-    accessorKey: "profile_verified",
-    header: ({  }) => {
-      return (
-        <section className={cn("flex  justify-start  items-center gap-2")}>
-          <h3>Verified</h3>
-        </section>
+        <div className="">
+          {status ? (
+            <ActiveBadge type="verified" />
+          ) : (
+            <InactiveBadge type="verified" />
+          )}
+        </div>
       );
     },
   },
@@ -105,19 +152,39 @@ export const columns: ColumnDef<Section>[] = [
       );
     },
     cell: ({ row }) => {
-      const [, setDeleteData] = useState<any>();
+      const [deleteData, setDeleteData] = useState<any>();
+      const [deleteService] = useMutation(DELETE_DRIVER_BY_ID, {
+        refetchQueries: [],
+      });
+      const [singleDriverData, setSingleDriverData] = useState<any>({
+        address: "",
+        balance: "",
+        birth_date: "",
+        created_at: "",
+        disabled: null,
+        driver_id: "",
+      });
 
-      const {
-        value: dValue,
-        toggle: dToggle,
-      } = useBoolean(false);
+      const { value: dValue, toggle: dToggle } = useBoolean(false);
+      const { value, toggle } = useBoolean(false);
 
+      const handleEdit = (row: any) => {
+        const RowData = row.original;
+        setSingleDriverData(RowData);
 
-      const handleEdit = () => {
-      
+        toggle();
       };
 
-      const handleDelete = () => {};
+      const handleDelete = async () => {
+        const id = deleteData.original?.id;
+
+        await deleteService({
+          variables: {
+            id: id,
+          },
+        });
+        alert("service deleted");
+      };
 
       return (
         <div className={"flex justify-center "}>
@@ -129,12 +196,26 @@ export const columns: ColumnDef<Section>[] = [
             row={row}
           />
           <DeleteConfirm
-            message={"Do you want to delete dirver?"}
+            message={"Do you want to delete Driver?"}
             title={"Do you want to delete this record permanently?"}
             isLoading={false}
             toggle={dToggle}
             open={dValue}
             fun={handleDelete}
+          />
+          <EmployeeModal
+            title={"Edit Driver"}
+            modelRatio="w-[100svw] lg:w-[650px]"
+            editMode={true}
+            open={value}
+            toggle={toggle}
+            form={
+              <UserForm
+                editMode
+                editData={singleDriverData || []}
+                toggle={toggle}
+              />
+            }
           />
         </div>
       );

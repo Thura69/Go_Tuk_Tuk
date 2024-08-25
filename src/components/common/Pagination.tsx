@@ -14,25 +14,21 @@ export function PaginationClient({
   itemsPerPage = 8,
   onPageChange,
 }: {
-  data: any[]; // Use a more specific type if possible
+  data: any[];
   itemsPerPage: number;
   onPageChange: (items: any[]) => void;
 }) {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(data?.length / itemsPerPage);
 
-  // Get the items to display for the current page
-  const currentItems = data?.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-
   useEffect(() => {
-    // Call the onPageChange callback with the current items only when currentPage or itemsPerPage changes
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = Math.min(startIndex + itemsPerPage, data.length);
+    const currentItems = data.slice(startIndex, endIndex);
+
     onPageChange(currentItems);
   }, [currentPage, itemsPerPage, onPageChange]);
 
-  // Handle page change
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
