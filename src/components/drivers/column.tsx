@@ -69,6 +69,16 @@ export const columns: ColumnDef<Section>[] = [
     },
   },
   {
+    accessorKey: "driver_id",
+    header: () => {
+      return (
+        <section className={cn("flex  justify-start  items-center gap-2")}>
+          <h3>Driver ID</h3>
+        </section>
+      );
+    },
+  },
+  {
     accessorKey: "address",
     header: () => {
       return (
@@ -78,6 +88,7 @@ export const columns: ColumnDef<Section>[] = [
       );
     },
   },
+
 
   {
     accessorKey: "balance",

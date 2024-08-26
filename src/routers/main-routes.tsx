@@ -8,6 +8,8 @@ import { Drivers } from "../pages/Drivers/Dirvers";
 import { Customers } from "../pages/Customers/Customers";
 import { SetUpFees } from "../pages/SetUpFees/SetUpFees";
 import { Notification } from "../pages/Notification/Notification";
+import { TopUp } from "../pages/TopUp/TopUp";
+import { Trip } from "../pages/Trip/Trip";
 
 const useAppRouter = () => {
   return useMemo(
@@ -26,6 +28,8 @@ const useAppRouter = () => {
             { path: "customers", element: <Customers /> },
             { path: "setup-fees", element: <SetUpFees /> },
             { path: "notifications", element: <Notification /> },
+            { path: "top-up", element: <TopUp /> },
+            { path: "trip-history", element: <Trip /> },
           ],
         },
         {

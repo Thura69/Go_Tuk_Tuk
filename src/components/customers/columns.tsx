@@ -6,9 +6,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import CellAction from "../common/CellAction";
 import { DeleteConfirm } from "../common/DeleteConfirmation";
 import EmployeeModal from "../common/Modal";
-import { UserForm } from "../drivers/user-form";
 import { useState } from "react";
 import { useBoolean } from "usehooks-ts";
+import { CustomerForm } from "./customer-form";
+import { useMutation } from "@apollo/client";
+import { DELETE_CUSTOMER_BY_ID } from "../../graphql/customers";
+import { GET_ALL_CUSTOMERS } from "../../graphql/kiloTaxi";
 
 export type Section = {
   __typename: string;
@@ -135,10 +138,10 @@ export const columns: ColumnDef<Section>[] = [
       );
     },
     cell: ({ row }) => {
-      const [, setDeleteData] = useState<any>();
-    //   const [deleteService] = useMutation(DELETE_DRIVER_BY_ID, {
-    //     refetchQueries: [],
-    //   });
+      const [deleteData, setDeleteData] = useState<any>();
+      const [deleteService, { loading }] = useMutation(DELETE_CUSTOMER_BY_ID, {
+        refetchQueries: [GET_ALL_CUSTOMERS],
+      });
       const [singleDriverData, setSingleDriverData] = useState<any>({
         address: "",
         balance: "",
@@ -159,14 +162,14 @@ export const columns: ColumnDef<Section>[] = [
       };
 
       const handleDelete = async () => {
-        // const id = deleteData.original?.id;
+        const id = deleteData.original?.id;
 
-        // await deleteService({
-        //   variables: {
-        //     id: id,
-        //   },
-        // });
-        alert("service deleted");
+        await deleteService({
+          variables: {
+            id: id,
+          },
+        });
+        dToggle();
       };
 
       return (
@@ -181,7 +184,7 @@ export const columns: ColumnDef<Section>[] = [
           <DeleteConfirm
             message={"Do you want to delete Customers?"}
             title={"Do you want to delete this record permanently?"}
-            isLoading={false}
+            isLoading={loading}
             toggle={dToggle}
             open={dValue}
             fun={handleDelete}
@@ -193,7 +196,7 @@ export const columns: ColumnDef<Section>[] = [
             open={value}
             toggle={toggle}
             form={
-              <UserForm
+              <CustomerForm
                 editMode
                 editData={singleDriverData || []}
                 toggle={toggle}

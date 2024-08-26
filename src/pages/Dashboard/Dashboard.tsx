@@ -6,7 +6,13 @@ import {
   CardTitle,
 } from "../../components/ui/card";
 import { useQuery } from "@apollo/client";
-import { FilePlus2, Handshake, PiggyBank, ShipWheel, Users2 } from "lucide-react";
+import {
+  FilePlus2,
+  Handshake,
+  PiggyBank,
+  ShipWheel,
+  Users2,
+} from "lucide-react";
 import {
   cn,
   getPostBarChart,
@@ -70,9 +76,7 @@ export const Dashboard = () => {
   const [cardData, setCardData] = useState<CardData[]>([]);
   const [data, setData] = useState<any[]>([]);
 
-  console.log({ ALLTRIP });
-  console.log({ ALLINCOME });
-  console.log({ TOTALTOPUP });
+
 
   useEffect(() => {
     if (
@@ -96,31 +100,31 @@ export const Dashboard = () => {
         {
           name: "Total Income",
           icon: <PiggyBank />,
-          count: ALLINCOME.driver_transactions_aggregate.aggregate.sum.amount,
+          count: ALLINCOME?.driver_transactions_aggregate.aggregate.sum.amount,
           color: "rgba(151,71,254,0.88)",
         },
         {
           name: "Customers",
           icon: <Users2 />,
-          count: CUSTOMERDATA.customers_aggregate.aggregate.count,
+          count: CUSTOMERDATA?.customers_aggregate.aggregate.count,
           color: "rgba(151,71,254,0.88)",
         },
         {
           name: "Drivers",
           icon: <Handshake />,
-          count: DRIVERSDATA.drivers_aggregate.aggregate.count,
+          count: DRIVERSDATA?.drivers_aggregate.aggregate.count,
           color: "rgba(101,194,43,0.92)",
         },
         {
           name: "Total Trips",
           icon: <ShipWheel />,
-          count: ALLTRIP.trips_aggregate.aggregate.count,
+          count: ALLTRIP?.trips_aggregate.aggregate.count,
           color: "rgba(26,29,207,0.91)",
         },
         {
           name: "Total Topup",
           icon: <FilePlus2 />,
-          count: TOTALTOPUP.driver_transactions_aggregate.aggregate.sum.amount,
+          count: TOTALTOPUP?.driver_transactions_aggregate.aggregate.sum.amount,
           color: "rgba(26,29,207,0.91)",
         },
       ]);
@@ -145,7 +149,7 @@ export const Dashboard = () => {
                   e.name === "Drivers" && "bg-[#f6d499]",
                   e.name === "Vehicles" && "bg-[#9efebd]",
                   e.name === "Total Trips" && "bg-[#f8ad96] ",
-                  e.name === "Total Topup" && 'bg-[#fcedaa]'
+                  e.name === "Total Topup" && "bg-[#fcedaa]"
                 )}
               >
                 <CardHeader className="">
@@ -157,7 +161,7 @@ export const Dashboard = () => {
                         e.name === "Drivers" && "bg-[#f9deb0]",
                         e.name === "Vehicles" && "bg-[#a9fbc3]",
                         e.name === "Total Trips" && "bg-[#f7b39e] ",
-                        e.name === "Total Topup" && 'bg-[#f6ebb9]'
+                        e.name === "Total Topup" && "bg-[#f6ebb9]"
                       )}
                     >
                       {e.icon}

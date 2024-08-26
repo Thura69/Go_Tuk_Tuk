@@ -1,5 +1,6 @@
 import {
   BellRing,
+  Bike,
   ClockArrowUp,
   Contact,
   Gauge,
@@ -50,6 +51,16 @@ const UseMenus = () => {
         path: "/setup-fees",
         icon: (
           <HandCoins
+            id={"my-anchor-element-/setup-fees"}
+            className="ml-4 text-gray-400 w-[20px] "
+          />
+        ),
+      },
+      {
+        name: "Trip History",
+        path: "/trip-history",
+        icon: (
+          <Bike
             id={"my-anchor-element-/setup-fees"}
             className="ml-4 text-gray-400 w-[20px] "
           />

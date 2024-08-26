@@ -34,7 +34,7 @@ export const UserForm: React.FC<UserFormType> = ({
     balance: yup.string(),
     created_at: yup.string(),
     disabled: yup.boolean(),
-    driver_id: yup.number(),
+    driver_id: yup.string(),
   });
 
   const form = useForm({
@@ -45,7 +45,7 @@ export const UserForm: React.FC<UserFormType> = ({
           balance: "",
           created_at: "",
           disabled: false,
-          driver_id: null,
+          driver_id: "",
         },
   });
 
@@ -54,6 +54,7 @@ export const UserForm: React.FC<UserFormType> = ({
       variables: {
         id: data?.id,
         disabled: data?.disabled,
+        driver_id: data?.driver_id,
       },
     });
     toggle();
@@ -79,8 +80,8 @@ export const UserForm: React.FC<UserFormType> = ({
         </Avatar>
         <div className={formContainer}>
           <InputField
-            disabled={editMode ? true : false}
-            labelTitle="Driver Title"
+            disabled={false}
+            labelTitle="Driver ID"
             fieldName="driver_id"
             placeholder={"Type Here"}
             required={false}

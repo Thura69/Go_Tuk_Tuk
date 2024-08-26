@@ -18,7 +18,6 @@ export const SideBar = () => {
   const MENUS = useMenus();
 
   const handleLogOut = () => {
-    console;
     window.localStorage.removeItem("login");
     navigate("/"); // This will now work correctly
   };
