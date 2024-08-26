@@ -6,7 +6,7 @@ import {
   CardTitle,
 } from "../../components/ui/card";
 import { useQuery } from "@apollo/client";
-import { FilePlus2, Handshake, Users2 } from "lucide-react";
+import { FilePlus2, Handshake, PiggyBank, ShipWheel, Users2 } from "lucide-react";
 import {
   cn,
   getPostBarChart,
@@ -95,7 +95,7 @@ export const Dashboard = () => {
       setCardData([
         {
           name: "Total Income",
-          icon: <Users2 />,
+          icon: <PiggyBank />,
           count: ALLINCOME.driver_transactions_aggregate.aggregate.sum.amount,
           color: "rgba(151,71,254,0.88)",
         },
@@ -113,7 +113,7 @@ export const Dashboard = () => {
         },
         {
           name: "Total Trips",
-          icon: <FilePlus2 />,
+          icon: <ShipWheel />,
           count: ALLTRIP.trips_aggregate.aggregate.count,
           color: "rgba(26,29,207,0.91)",
         },
@@ -140,10 +140,12 @@ export const Dashboard = () => {
               <Card
                 key={index}
                 className={cn(
-                  `bg-[#F4E7FF] h-[200px] text-[#423F7A] rounded-2xl shadow border-none w-[33%]`,
+                  `bg-[#F4E7FF] drop-shadow-lg hover:scale-[1.03] duration-300 h-[200px] text-[#423F7A] rounded-2xl shadow border-none w-[33%]`,
                   e.name === "Customers" && "bg-[#fa919f]",
                   e.name === "Drivers" && "bg-[#f6d499]",
-                  e.name === "Vehicles" && "bg-[#9efebd]"
+                  e.name === "Vehicles" && "bg-[#9efebd]",
+                  e.name === "Total Trips" && "bg-[#f8ad96] ",
+                  e.name === "Total Topup" && 'bg-[#fcedaa]'
                 )}
               >
                 <CardHeader className="">
@@ -153,7 +155,9 @@ export const Dashboard = () => {
                         " inline-block shadow p-3 bg-[#FFE2E6] rounded-full",
                         e.name === "Customers" && "bg-[#fab3be]",
                         e.name === "Drivers" && "bg-[#f9deb0]",
-                        e.name === "Vehicles" && "bg-[#a9fbc3]"
+                        e.name === "Vehicles" && "bg-[#a9fbc3]",
+                        e.name === "Total Trips" && "bg-[#f7b39e] ",
+                        e.name === "Total Topup" && 'bg-[#f6ebb9]'
                       )}
                     >
                       {e.icon}
@@ -170,12 +174,11 @@ export const Dashboard = () => {
             ))}
           </div>
         </div>
-      
       </div>
-    <div className="flex gap-4">
-    <PostDashboard chartData={postData} />
-      <UsersAndPartners  chartData={data} />
-    </div>
+      <div className="flex gap-4">
+        <PostDashboard chartData={postData} />
+        <UsersAndPartners chartData={data} />
+      </div>
     </div>
   );
 };
