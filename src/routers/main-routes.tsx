@@ -10,6 +10,7 @@ import { SetUpFees } from "../pages/SetUpFees/SetUpFees";
 import { Notification } from "../pages/Notification/Notification";
 import { TopUp } from "../pages/TopUp/TopUp";
 import { Trip } from "../pages/Trip/Trip";
+import { Maps } from "../pages/Map/Map";
 
 const useAppRouter = () => {
   return useMemo(
@@ -30,6 +31,9 @@ const useAppRouter = () => {
             { path: "notifications", element: <Notification /> },
             { path: "top-up", element: <TopUp /> },
             { path: "trip-history", element: <Trip /> },
+            { path: "map", element: <Maps />  },
+
+
           ],
         },
         {

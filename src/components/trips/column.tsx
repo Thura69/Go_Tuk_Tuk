@@ -24,40 +24,22 @@ export const columns: ColumnDef<Trips>[] = [
     id: "id",
   },
   {
-    accessorKey: "start_location",
+    accessorKey: "driver_id",
     header: () => {
       return (
         <section className={cn("flex  justify-start  items-center gap-2")}>
-          <h3>Start Location</h3>
+          <h3>Driver ID</h3>
         </section>
-      );
-    },
-    cell: ({ row }) => {
-      const dateString = row.getValue("start_location") as string;
-
-      return (
-        <div className="w-[250px]">
-          <h3>{dateString}</h3>
-        </div>
       );
     },
   },
   {
-    accessorKey: "end_location",
+    accessorKey: "distance_km",
     header: () => {
       return (
         <section className={cn("flex  justify-start  items-center gap-2")}>
-          <h3>End Location</h3>
+          <h3>Distance KM</h3>
         </section>
-      );
-    },
-    cell: ({ row }) => {
-      const dateString = row.getValue("end_location") as string;
-
-      return (
-        <div className="w-[250px]">
-          <h3>{dateString}</h3>
-        </div>
       );
     },
   },
@@ -72,48 +54,11 @@ export const columns: ColumnDef<Trips>[] = [
     },
     cell: ({ row }) => {
       const dateString = row.getValue("total_amount") as string;
+      const fullNumber = Math.round(Number(dateString));
 
       return (
-        <div>
-          <h3>{dateString}</h3>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "distance_fee_per_km",
-    header: () => {
-      return (
-        <section className={cn("flex  justify-start  items-center gap-2")}>
-          <h3>Distance Fee Per KM</h3>
-        </section>
-      );
-    },
-    cell: ({ row }) => {
-      const dateString = row.getValue("distance_fee_per_km") as string;
-
-      return (
-        <div>
-          <h3>{dateString}</h3>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "extra_fee",
-    header: () => {
-      return (
-        <section className={cn("flex  justify-start  items-center gap-2")}>
-          <h3>Extra Fee</h3>
-        </section>
-      );
-    },
-    cell: ({ row }) => {
-      const dateString = row.getValue("extra_fee") as string;
-
-      return (
-        <div>
-          <h3>{dateString}</h3>
+        <div className="">
+          <h3>{fullNumber}</h3>
         </div>
       );
     },
@@ -127,13 +72,24 @@ export const columns: ColumnDef<Trips>[] = [
         </section>
       );
     },
-    cell: ({ row }) => {
-      const dateString = row.getValue("commission_fee") as string;
-
+  },
+  {
+    accessorKey: "driver_received_amount",
+    header: () => {
       return (
-        <div>
-          <h3>{dateString}</h3>
-        </div>
+        <section className={cn("flex  justify-start  items-center gap-2")}>
+          <h3>Driver Received Amount</h3>
+        </section>
+      );
+    },
+  },
+  {
+    accessorKey: "status",
+    header: () => {
+      return (
+        <section className={cn("flex  justify-start  items-center gap-2")}>
+          <h3>Status</h3>
+        </section>
       );
     },
   },
@@ -143,16 +99,6 @@ export const columns: ColumnDef<Trips>[] = [
       return (
         <section className={cn("flex  justify-start  items-center gap-2")}>
           <h3>Comission Fee</h3>
-        </section>
-      );
-    },
-  },
-  {
-    accessorKey: "waiting_fee",
-    header: () => {
-      return (
-        <section className={cn("flex  justify-start  items-center gap-2")}>
-          <h3>Waiting Fee</h3>
         </section>
       );
     },
@@ -178,75 +124,75 @@ export const columns: ColumnDef<Trips>[] = [
       );
     },
   },
-//   {
-//     accessorKey: "action",
-//     header: () => {
-//       return (
-//         <div className="h-full bg-zinc-50  flex items-center justify-center">
-//           <p className="font-bold text-zinc-500 text-center">Action</p>
-//         </div>
-//       );
-//     },
-//     cell: ({ row }) => {
-//       const [deleteData, setDeleteData] = useState<any>();
-//       const [singleDriverData, setSingleDriverData] = useState<any>({
-//         address: "",
-//         balance: "",
-//         birth_date: "",
-//         created_at: "",
-//         disabled: null,
-//         driver_id: "",
-//       });
+  //   {
+  //     accessorKey: "action",
+  //     header: () => {
+  //       return (
+  //         <div className="h-full bg-zinc-50  flex items-center justify-center">
+  //           <p className="font-bold text-zinc-500 text-center">Action</p>
+  //         </div>
+  //       );
+  //     },
+  //     cell: ({ row }) => {
+  //       const [deleteData, setDeleteData] = useState<any>();
+  //       const [singleDriverData, setSingleDriverData] = useState<any>({
+  //         address: "",
+  //         balance: "",
+  //         birth_date: "",
+  //         created_at: "",
+  //         disabled: null,
+  //         driver_id: "",
+  //       });
 
-//       const { value: dValue, toggle: dToggle } = useBoolean(false);
-//       const { value, toggle } = useBoolean(false);
+  //       const { value: dValue, toggle: dToggle } = useBoolean(false);
+  //       const { value, toggle } = useBoolean(false);
 
-//       const handleEdit = (row: any) => {
-//         const RowData = row.original;
-//         setSingleDriverData(RowData);
+  //       const handleEdit = (row: any) => {
+  //         const RowData = row.original;
+  //         setSingleDriverData(RowData);
 
-//         toggle();
-//       };
+  //         toggle();
+  //       };
 
-//       const handleDelete = async () => {
-//         const id = deleteData.original?.id;
+  //       const handleDelete = async () => {
+  //         const id = deleteData.original?.id;
 
-//         alert("service deleted");
-//       };
+  //         alert("service deleted");
+  //       };
 
-//       return (
-//         <div className={"flex justify-center "}>
-//           <CellAction
-//             language="section"
-//             setSingleCodeGenerator={setDeleteData}
-//             handleDelete={() => dToggle()}
-//             handleEdit={handleEdit}
-//             row={row}
-//           />
-//           <DeleteConfirm
-//             message={"Do you want to delete Driver?"}
-//             title={"Do you want to delete this record permanently?"}
-//             isLoading={false}
-//             toggle={dToggle}
-//             open={dValue}
-//             fun={handleDelete}
-//           />
-//           <EmployeeModal
-//             title={"Edit Driver"}
-//             modelRatio="w-[100svw] lg:w-[650px]"
-//             editMode={true}
-//             open={value}
-//             toggle={toggle}
-//             form={
-//               <UserForm
-//                 editMode
-//                 editData={singleDriverData || []}
-//                 toggle={toggle}
-//               />
-//             }
-//           />
-//         </div>
-//       );
-//     },
-//   },
+  //       return (
+  //         <div className={"flex justify-center "}>
+  //           <CellAction
+  //             language="section"
+  //             setSingleCodeGenerator={setDeleteData}
+  //             handleDelete={() => dToggle()}
+  //             handleEdit={handleEdit}
+  //             row={row}
+  //           />
+  //           <DeleteConfirm
+  //             message={"Do you want to delete Driver?"}
+  //             title={"Do you want to delete this record permanently?"}
+  //             isLoading={false}
+  //             toggle={dToggle}
+  //             open={dValue}
+  //             fun={handleDelete}
+  //           />
+  //           <EmployeeModal
+  //             title={"Edit Driver"}
+  //             modelRatio="w-[100svw] lg:w-[650px]"
+  //             editMode={true}
+  //             open={value}
+  //             toggle={toggle}
+  //             form={
+  //               <UserForm
+  //                 editMode
+  //                 editData={singleDriverData || []}
+  //                 toggle={toggle}
+  //               />
+  //             }
+  //           />
+  //         </div>
+  //       );
+  //     },
+  //   },
 ];

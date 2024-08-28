@@ -9,6 +9,7 @@ export const GET_ALL_TRIPS = gql`
       created_at
       distance_fee
       distance_fee_per_km
+      driver_received_amount
       distance_km
       total_amount
       start_location
