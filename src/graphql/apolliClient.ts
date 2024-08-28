@@ -4,7 +4,7 @@ import authStorage from "../lib/authStorage";
 import { onError } from "@apollo/client/link/error";
 
 const httpLink = createHttpLink({
-  uri: "https://taxisolutionmm.hasura.app/v1/graphql",
+  uri: "https://api.gomdy.taxisolutionmm.com/v1/graphql",
 });
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
@@ -32,7 +32,7 @@ const createApolloClient = () => {
         headers: {
           ...headers,
           "x-hasura-admin-secret":
-            "oF94RMuzzvmQKIINJlNygYX4kSQvoSYbq5P2sqT3XQZV9Vk4y2YH13XY0jd6wvhA",
+            "myadminsecretkey",
         },
       };
     } catch (e) {
