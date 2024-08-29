@@ -1,20 +1,19 @@
-import { useMemo, useState } from "react";
+import  { useMemo, useState } from "react";
 import TableFrame from "../../components/common/TableFrame";
 import { useBoolean } from "usehooks-ts";
-import { GET_ALL_TRIPS } from "../../graphql/trip";
 import { useQuery } from "@apollo/client";
+import { GETALL_EXTRAFEES } from "../../graphql/extraFee";
 import { DataTable } from "../../components/tables/Data-table";
-import { columns } from "../../components/trips/column";
+import { columns } from "../../components/extrafees/column";
 import { PaginationClient } from "../../components/common/Pagination";
 
-export const Trip = () => {
-  const { toggle } = useBoolean(false);
-  const { data, loading } = useQuery(GET_ALL_TRIPS, {
+export const ExtraFee = () => {
+  const { data, loading } = useQuery(GETALL_EXTRAFEES, {
     fetchPolicy: "network-only",
   });
+  const { toggle } = useBoolean(false);
 
-
-  const memorizedData = useMemo(() => data?.trips || [], [data]);
+  const memorizedData = useMemo(() => data?.extra_fees || [], [data]);
 
   const [currentTableData, setCurrentTableData] = useState(memorizedData);
 
@@ -25,7 +24,7 @@ export const Trip = () => {
   return (
     <div className="p-[30px] min-h-[calc(100svh-81px)]  bg-gray-100">
       <TableFrame
-        title="Trip History"
+        title="Extra Fees"
         modalTrue={() => {
           toggle();
         }}

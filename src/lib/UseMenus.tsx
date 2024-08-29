@@ -1,6 +1,7 @@
 import {
   BellRing,
   Bike,
+  CirclePlus,
   ClockArrowUp,
   Contact,
   Gauge,
@@ -67,6 +68,16 @@ const UseMenus = () => {
         ),
       },
       {
+        name: "Extra Fee",
+        path: "/extra-fees",
+        icon: (
+          <CirclePlus
+            id={"my-anchor-element-/notification"}
+            className="ml-4 text-gray-400 w-[20px] "
+          />
+        ),
+      },
+      {
         name: "Notifications",
         path: "/notification",
         icon: (
@@ -76,6 +87,7 @@ const UseMenus = () => {
           />
         ),
       },
+
       {
         name: "Top-up",
         path: "/top-up",

@@ -4,7 +4,7 @@ import {
   AdvancedMarker,
   MapCameraChangedEvent,
 } from "@vis.gl/react-google-maps";
-import TUKTUK from "../../assets/tuk-tuk-rickshaw-svgrepo-com.svg";
+import TUKTUK from "../../assets/Location icon.svg";
 
 type Poi = { key: string; location: google.maps.LatLngLiteral };
 
@@ -22,7 +22,10 @@ const PoiMarkers = (props: { pois: Poi[] }) => {
     <>
       {props.pois.map((poi: Poi) => (
         <AdvancedMarker key={poi.key} position={poi.location}>
-          <img className="w-[40px]" src={TUKTUK} alt="tuktuk" />
+         <div className=" relative flex items-center justify-center">
+         <img className="w-[50px]" src={TUKTUK} alt="tuktuk" />
+         <img className="w-[40px] rounded-full top-[5.5px] absolute" src="https://github.com/shadcn.png"/>
+         </div>
         </AdvancedMarker>
       ))}
     </>

@@ -13,6 +13,8 @@ export const GET_ALL_TRIPS = gql`
       distance_km
       total_amount
       start_location
+      trip_id
+      status
       end_location
       driver_id
       extra_fee

@@ -34,7 +34,7 @@ export interface DataTableProps<TData, TValue> {
 const TBLRow = ({ row }: { row: Row<any> }) => {
   return (
     <TableRow
-      className=" border-t hover:bg-yellow-50 cursor-pointer   border-gray-200/50  bg-white  "
+      className=" border-t hover:bg-yellow-50 cursor-pointer   border-gray-200/50  bg-white h-[51px] "
       key={row.id}
       data-state={row.getIsSelected() && "selected"}
     >

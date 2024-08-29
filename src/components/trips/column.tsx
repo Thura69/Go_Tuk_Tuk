@@ -24,11 +24,11 @@ export const columns: ColumnDef<Trips>[] = [
     id: "id",
   },
   {
-    accessorKey: "driver_id",
+    accessorKey: "trip_id",
     header: () => {
       return (
         <section className={cn("flex  justify-start  items-center gap-2")}>
-          <h3>Driver ID</h3>
+          <h3>Trip ID</h3>
         </section>
       );
     },

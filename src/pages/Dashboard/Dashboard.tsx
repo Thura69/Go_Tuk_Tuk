@@ -90,11 +90,13 @@ export const Dashboard = () => {
         ALLCUSTOMERS?.customers,
         ALLDRIVERS?.drivers
       );
+      console.log(dataChart)
       setData(dataChart);
 
       const postBarChart = getPostBarChart(ALLDRIVERS);
 
       setPostData(postBarChart);
+
 
       setCardData([
         {

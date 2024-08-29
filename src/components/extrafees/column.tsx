@@ -1,32 +1,24 @@
 import { ColumnDef } from "@tanstack/react-table";
-import InactiveBadge from "../common/InactiveBadge";
-import { useBoolean } from "usehooks-ts";
 import { cn, getRelativeTime } from "../../lib/utils";
 import ActiveBadge from "../common/ActiveBadge";
-import { useState } from "react";
+import InactiveBadge from "../common/InactiveBadge";
 import CellAction from "../common/CellAction";
-import { DeleteConfirm } from "../common/DeleteConfirmation";
+import { useBoolean } from "usehooks-ts";
+import { useState } from "react";
 import EmployeeModal from "../common/Modal";
-import { UserForm } from "./user-form";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { useMutation } from "@apollo/client";
-import {
-  DELETE_DRIVER_BY_ID,
-} from "../../graphql/kiloTaxi";
+import { ExtraFeesForm } from "./extra-fees-form";
 
-export type Section = {
+export type ExtraFeesType = {
   __typename: string;
+  updated_at: string;
   name: string;
-  address: string;
-  profile_picture_url: string;
-  balance: number;
-  birth_date: null;
+  id: string;
+  disabled: boolean;
   created_at: string;
-  disabled: false;
-  driver_id: string;
+  amount: number;
 };
 
-export const columns: ColumnDef<Section>[] = [
+export const columns: ColumnDef<ExtraFeesType>[] = [
   {
     id: "id",
   },
@@ -41,71 +33,11 @@ export const columns: ColumnDef<Section>[] = [
     },
   },
   {
-    accessorKey: "profile_picture_url",
+    accessorKey: "amount",
     header: () => {
       return (
         <section className={cn("flex  justify-start  items-center gap-2")}>
-          <h3>Photo</h3>
-        </section>
-      );
-    },
-    cell: ({ row }) => {
-      const PICURL = row.getValue("profile_picture_url") as string;
-      return (
-        <div className="">
-          {PICURL ? (
-            <Avatar>
-              <AvatarImage src={PICURL} alt="@shadcn" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-          ) : (
-            <Avatar>
-              <AvatarImage src={PICURL} alt="@shadcn" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-          )}
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "driver_id",
-    header: () => {
-      return (
-        <section className={cn("flex  justify-start  items-center gap-2")}>
-          <h3>Driver ID</h3>
-        </section>
-      );
-    },
-  },
-  {
-    accessorKey: "address",
-    header: () => {
-      return (
-        <section className={cn("flex  justify-start  items-center gap-2")}>
-          <h3>Address</h3>
-        </section>
-      );
-    },
-  },
-
-
-  {
-    accessorKey: "balance",
-    header: () => {
-      return (
-        <section className={cn("flex  justify-start  items-center gap-2")}>
-          <h3>Balance</h3>
-        </section>
-      );
-    },
-  },
-  {
-    accessorKey: "birth_date",
-    header: () => {
-      return (
-        <section className={cn("flex  justify-start  items-center gap-2")}>
-          <h3>Birthday</h3>
+          <h3>Amount</h3>
         </section>
       );
     },
@@ -153,7 +85,6 @@ export const columns: ColumnDef<Section>[] = [
       );
     },
   },
-  
   {
     accessorKey: "action",
     header: () => {
@@ -164,10 +95,7 @@ export const columns: ColumnDef<Section>[] = [
       );
     },
     cell: ({ row }) => {
-      const [deleteData, setDeleteData] = useState<any>();
-      const [deleteService] = useMutation(DELETE_DRIVER_BY_ID, {
-        refetchQueries: [],
-      });
+      const [setDeleteData] = useState<any>();
       const [singleDriverData, setSingleDriverData] = useState<any>({
         address: "",
         balance: "",
@@ -177,7 +105,7 @@ export const columns: ColumnDef<Section>[] = [
         driver_id: "",
       });
 
-      const { value: dValue, toggle: dToggle } = useBoolean(false);
+      const { toggle: dToggle } = useBoolean(false);
       const { value, toggle } = useBoolean(false);
 
       const handleEdit = (row: any) => {
@@ -187,42 +115,27 @@ export const columns: ColumnDef<Section>[] = [
         toggle();
       };
 
-      const handleDelete = async () => {
-        const id = deleteData.original?.id;
-
-        await deleteService({
-          variables: {
-            id: id,
-          },
-        });
-        alert("service deleted");
-      };
 
       return (
         <div className={"flex justify-center "}>
           <CellAction
             language="section"
+            isDelete={false}
+            isEdit={false}
+            isDetails
             setSingleCodeGenerator={setDeleteData}
             handleDelete={() => dToggle()}
             handleEdit={handleEdit}
             row={row}
           />
-          <DeleteConfirm
-            message={"Do you want to delete Driver?"}
-            title={"Do you want to delete this record permanently?"}
-            isLoading={false}
-            toggle={dToggle}
-            open={dValue}
-            fun={handleDelete}
-          />
           <EmployeeModal
-            title={"Edit Driver"}
+            title={"Extra Fees Detail"}
             modelRatio="w-[100svw] lg:w-[650px]"
             editMode={true}
             open={value}
             toggle={toggle}
             form={
-              <UserForm
+              <ExtraFeesForm
                 editMode
                 editData={singleDriverData || []}
                 toggle={toggle}

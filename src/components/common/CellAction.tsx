@@ -12,6 +12,9 @@ export interface CellActionProps {
   language: string;
   handleEdit: (row: any) => void;
   handleDelete: (row: any) => void;
+  isDetails?: boolean;
+  isEdit?: boolean;
+  isDelete?: boolean;
   row: any;
   setSingleCodeGenerator: (row: any) => void;
 }
@@ -19,6 +22,9 @@ export interface CellActionProps {
 function CellAction({
   setSingleCodeGenerator,
   handleDelete,
+  isDelete = true,
+  isDetails,
+  isEdit = true,
   handleEdit,
   row,
 }: CellActionProps) {
@@ -38,17 +44,26 @@ function CellAction({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem onClick={() => handleEdit(row)}>
-            Edit
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => {
-              handleDelete(row);
-              setSingleCodeGenerator(row);
-            }}
-          >
-            Delete
-          </DropdownMenuItem>
+          {isEdit && (
+            <DropdownMenuItem onClick={() => handleEdit(row)}>
+              Edit
+            </DropdownMenuItem>
+          )}
+          {isDetails && (
+            <DropdownMenuItem onClick={() => handleEdit(row)}>
+              Details
+            </DropdownMenuItem>
+          )}
+          {isDelete && (
+            <DropdownMenuItem
+              onClick={() => {
+                handleDelete(row);
+                setSingleCodeGenerator(row);
+              }}
+            >
+              Delete
+            </DropdownMenuItem>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

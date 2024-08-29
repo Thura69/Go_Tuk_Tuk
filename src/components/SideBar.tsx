@@ -8,11 +8,14 @@ import { ScrollArea } from "./ui/scroll-area";
 import { LogOut, Settings } from "lucide-react";
 import { Switch } from "./ui/switch";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import "react-tooltip/dist/react-tooltip.css";
 
 export const SideBar = () => {
   const [open, setOpen] = useState(false);
+  const location = useLocation();
+
   const navigate = useNavigate();
 
   const MENUS = useMenus();
@@ -50,7 +53,11 @@ export const SideBar = () => {
             <Button
               key={index}
               onClick={() => navigate(`${e.path}`)}
-              className=" rounded-md border-none drop-shadow-none p-0 w-full  h-[30px]  shadow-none bg-gray-50 flex justify-start  gap-4 "
+              className={cn(
+                "  rounded-md border-none drop-shadow-none p-0 w-full  h-[30px]  shadow-none bg-gray-50 flex justify-start hover:bg-gray-50  gap-4 ",
+                location.pathname === e.path &&
+                  "bg-sky-300 hover:bg-sky-400 rounded text-white"
+              )}
               type="button"
               variant={"outline"}
             >
@@ -59,7 +66,16 @@ export const SideBar = () => {
               {/* <Tooltip style={{ zIndex: 1000 }} content={e.name}>
                 Hello
               </Tooltip> */}
-              {open && <p className="text-gray-500">{e.name}</p>}
+              {open && (
+                <p
+                  className={cn(
+                    "text-gray-500",
+                    location.pathname === e.path && "text-white"
+                  )}
+                >
+                  {e.name}
+                </p>
+              )}
             </Button>
           ))}
           <div className="pt-[65px] space-y-1">
