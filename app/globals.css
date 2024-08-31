@@ -68,6 +68,8 @@
   }
 }
 
+
+
 .with-action-column td:last-child,
 .with-action-column th:last-child {
   @apply sticky right-[0px] bg-white border-white p-0;

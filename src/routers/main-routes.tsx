@@ -12,6 +12,7 @@ import { TopUp } from "../pages/TopUp/TopUp";
 import { Trip } from "../pages/Trip/Trip";
 import { Maps } from "../pages/Map/Map";
 import { ExtraFee } from "../pages/ExtraFee/ExtraFee";
+import { TripDetails } from "../pages/Trip/TripDetails";
 
 const useAppRouter = () => {
   return useMemo(
@@ -32,10 +33,9 @@ const useAppRouter = () => {
             { path: "notifications", element: <Notification /> },
             { path: "top-up", element: <TopUp /> },
             { path: "trip-history", element: <Trip /> },
-            { path: "map", element: <Maps />  },
-            {path:"extra-fees",element:<ExtraFee/>}
-
-
+            { path: "trip-history/details/:id", element: <TripDetails /> },
+            { path: "map", element: <Maps /> },
+            { path: "extra-fees", element: <ExtraFee /> },
           ],
         },
         {

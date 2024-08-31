@@ -1,5 +1,4 @@
 import {
-  APIProvider,
   Map,
   AdvancedMarker,
   MapCameraChangedEvent,
@@ -34,10 +33,6 @@ const PoiMarkers = (props: { pois: Poi[] }) => {
 
 export const Maps = () => {
   return (
-    <APIProvider
-      apiKey={"AIzaSyBHWnJ99eF2wvCJdFgIRIkpBYyEuZwazFM"}
-      onLoad={() => console.log("Maps API has loaded.")}
-    >
       <Map
         defaultZoom={13}
         mapId={"bf51a910020fa25a"}
@@ -54,6 +49,5 @@ export const Maps = () => {
       >
         <PoiMarkers pois={locations} />
       </Map>
-    </APIProvider>
   );
 };

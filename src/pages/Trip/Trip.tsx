@@ -14,7 +14,10 @@ export const Trip = () => {
   });
 
 
+
   const memorizedData = useMemo(() => data?.trips || [], [data]);
+
+
 
   const [currentTableData, setCurrentTableData] = useState(memorizedData);
 

@@ -1,5 +1,11 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { cn, getRelativeTime } from "../../lib/utils";
+import { useState } from "react";
+import { useBoolean } from "usehooks-ts";
+import CellAction from "../common/CellAction";
+import EmployeeModal from "../common/Modal";
+import { ExtraFeesForm } from "../extrafees/extra-fees-form";
+import { useNavigate } from "react-router-dom";
 
 export type Trips = {
   __typename: "trips";
@@ -124,75 +130,67 @@ export const columns: ColumnDef<Trips>[] = [
       );
     },
   },
-  //   {
-  //     accessorKey: "action",
-  //     header: () => {
-  //       return (
-  //         <div className="h-full bg-zinc-50  flex items-center justify-center">
-  //           <p className="font-bold text-zinc-500 text-center">Action</p>
-  //         </div>
-  //       );
-  //     },
-  //     cell: ({ row }) => {
-  //       const [deleteData, setDeleteData] = useState<any>();
-  //       const [singleDriverData, setSingleDriverData] = useState<any>({
-  //         address: "",
-  //         balance: "",
-  //         birth_date: "",
-  //         created_at: "",
-  //         disabled: null,
-  //         driver_id: "",
-  //       });
+  {
+    accessorKey: "action",
+    header: () => {
+      return (
+        <div className="h-full bg-zinc-50  flex items-center justify-center">
+          <p className="font-bold text-zinc-500 text-center">Action</p>
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      const [setDeleteData] = useState<any>();
+      const navigate = useNavigate();
 
-  //       const { value: dValue, toggle: dToggle } = useBoolean(false);
-  //       const { value, toggle } = useBoolean(false);
+      const [singleDriverData] = useState<any>({
+        address: "",
+        balance: "",
+        birth_date: "",
+        created_at: "",
+        disabled: null,
+        driver_id: "",
+      });
 
-  //       const handleEdit = (row: any) => {
-  //         const RowData = row.original;
-  //         setSingleDriverData(RowData);
+      const { toggle: dToggle } = useBoolean(false);
+      const { value, toggle } = useBoolean(false);
 
-  //         toggle();
-  //       };
+      const handleEdit = (row: any) => {
+        const RowData = row.original;
 
-  //       const handleDelete = async () => {
-  //         const id = deleteData.original?.id;
+        navigate(`/trip-history/details/${RowData.id}`);
 
-  //         alert("service deleted");
-  //       };
+        toggle();
+      };
 
-  //       return (
-  //         <div className={"flex justify-center "}>
-  //           <CellAction
-  //             language="section"
-  //             setSingleCodeGenerator={setDeleteData}
-  //             handleDelete={() => dToggle()}
-  //             handleEdit={handleEdit}
-  //             row={row}
-  //           />
-  //           <DeleteConfirm
-  //             message={"Do you want to delete Driver?"}
-  //             title={"Do you want to delete this record permanently?"}
-  //             isLoading={false}
-  //             toggle={dToggle}
-  //             open={dValue}
-  //             fun={handleDelete}
-  //           />
-  //           <EmployeeModal
-  //             title={"Edit Driver"}
-  //             modelRatio="w-[100svw] lg:w-[650px]"
-  //             editMode={true}
-  //             open={value}
-  //             toggle={toggle}
-  //             form={
-  //               <UserForm
-  //                 editMode
-  //                 editData={singleDriverData || []}
-  //                 toggle={toggle}
-  //               />
-  //             }
-  //           />
-  //         </div>
-  //       );
-  //     },
-  //   },
+      return (
+        <div className={"flex justify-center "}>
+          <CellAction
+            language="section"
+            isDelete={false}
+            isEdit={false}
+            isDetails
+            setSingleCodeGenerator={setDeleteData}
+            handleDelete={() => dToggle()}
+            handleEdit={handleEdit}
+            row={row}
+          />
+          <EmployeeModal
+            title={"Extra Fees Detail"}
+            modelRatio="w-[100svw] lg:w-[650px]"
+            editMode={true}
+            open={value}
+            toggle={toggle}
+            form={
+              <ExtraFeesForm
+                editMode
+                editData={singleDriverData || []}
+                toggle={toggle}
+              />
+            }
+          />
+        </div>
+      );
+    },
+  },
 ];
