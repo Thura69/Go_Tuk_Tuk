@@ -23,7 +23,7 @@ const UseMenus = () => {
         icon: (
           <Gauge
             id={"my-anchor-element-/dashboard"}
-            className=" ml-4 text-gray-400 w-[20px] "
+            className=" text-gray-400 w-[20px] "
           />
         ),
       },
@@ -33,7 +33,7 @@ const UseMenus = () => {
         icon: (
           <Contact
             id={"my-anchor-element-/drivers"}
-            className="ml-4 text-gray-400 w-[20px] "
+            className=" text-gray-400 w-[20px] "
           />
         ),
       },
@@ -43,7 +43,7 @@ const UseMenus = () => {
         icon: (
           <UsersRound
             id={"my-anchor-element-/customers"}
-            className="ml-4 text-gray-400 w-[20px] "
+            className=" text-gray-400 w-[20px] "
           />
         ),
       },
@@ -53,7 +53,7 @@ const UseMenus = () => {
         icon: (
           <HandCoins
             id={"my-anchor-element-/setup-fees"}
-            className="ml-4 text-gray-400 w-[20px] "
+            className=" text-gray-400 w-[20px] "
           />
         ),
       },
@@ -63,7 +63,7 @@ const UseMenus = () => {
         icon: (
           <Bike
             id={"my-anchor-element-/setup-fees"}
-            className="ml-4 text-gray-400 w-[20px] "
+            className=" text-gray-400 w-[20px] "
           />
         ),
       },
@@ -73,7 +73,7 @@ const UseMenus = () => {
         icon: (
           <CirclePlus
             id={"my-anchor-element-/notification"}
-            className="ml-4 text-gray-400 w-[20px] "
+            className=" text-gray-400 w-[20px] "
           />
         ),
       },
@@ -83,7 +83,7 @@ const UseMenus = () => {
         icon: (
           <BellRing
             id={"my-anchor-element-/notification"}
-            className="ml-4 text-gray-400 w-[20px] "
+            className=" text-gray-400 w-[20px] "
           />
         ),
       },
@@ -94,7 +94,7 @@ const UseMenus = () => {
         icon: (
           <Wallet
             id={"my-anchor-element-/top-up"}
-            className="ml-4 text-gray-400 w-[20px] "
+            className=" text-gray-400 w-[20px] "
           />
         ),
       },
@@ -104,7 +104,7 @@ const UseMenus = () => {
         icon: (
           <Scroll
             id={"my-anchor-element-/posts"}
-            className="ml-4 text-gray-400 w-[20px] "
+            className=" text-gray-400 w-[20px] "
           />
         ),
       },
@@ -114,7 +114,7 @@ const UseMenus = () => {
         icon: (
           <Ticket
             id={"my-anchor-element-/cupons"}
-            className="ml-4 text-gray-400 w-[20px] "
+            className=" text-gray-400 w-[20px] "
           />
         ),
       },
@@ -129,7 +129,7 @@ const UseMenus = () => {
         icon: (
           <ClockArrowUp
             id={"my-anchor-element-/book-orders"}
-            className="ml-4 text-gray-400 w-[20px] "
+            className=" text-gray-400 w-[20px] "
           />
         ),
       },
@@ -139,7 +139,7 @@ const UseMenus = () => {
         icon: (
           <MapPinned
             id={"my-anchor-element-/map"}
-            className="ml-4 text-gray-400 w-[20px] "
+            className=" text-gray-400 w-[20px] "
           />
         ),
       },

@@ -27,12 +27,86 @@ export function PaginationClient({
     const currentItems = data.slice(startIndex, endIndex);
 
     onPageChange(currentItems);
-  }, [currentPage, itemsPerPage, onPageChange]);
+  }, [currentPage, itemsPerPage, data, onPageChange]);
 
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
     }
+  };
+
+  const renderPaginationItems = () => {
+    const pages = [];
+
+    if (totalPages <= 5) {
+      // Show all pages if less than or equal to 5 pages
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(
+          <PaginationItem key={i}>
+            <PaginationLink
+              href="#"
+              isActive={currentPage === i}
+              onClick={() => handlePageChange(i)}
+            >
+              {i}
+            </PaginationLink>
+          </PaginationItem>
+        );
+      }
+    } else {
+      // Show limited pages with ellipsis if more than 5 pages
+      pages.push(
+        <PaginationItem key={1}>
+          <PaginationLink
+            href="#"
+            isActive={currentPage === 1}
+            onClick={() => handlePageChange(1)}
+          >
+            1
+          </PaginationLink>
+        </PaginationItem>
+      );
+
+      if (currentPage > 3) {
+        pages.push(<PaginationEllipsis key="start-ellipsis" />);
+      }
+
+      // Show pages around the current page
+      const startPage = Math.max(2, currentPage - 1);
+      const endPage = Math.min(totalPages - 1, currentPage + 1);
+
+      for (let i = startPage; i <= endPage; i++) {
+        pages.push(
+          <PaginationItem key={i}>
+            <PaginationLink
+              href="#"
+              isActive={currentPage === i}
+              onClick={() => handlePageChange(i)}
+            >
+              {i}
+            </PaginationLink>
+          </PaginationItem>
+        );
+      }
+
+      if (currentPage < totalPages - 2) {
+        pages.push(<PaginationEllipsis key="end-ellipsis" />);
+      }
+
+      pages.push(
+        <PaginationItem key={totalPages}>
+          <PaginationLink
+            href="#"
+            isActive={currentPage === totalPages}
+            onClick={() => handlePageChange(totalPages)}
+          >
+            {totalPages}
+          </PaginationLink>
+        </PaginationItem>
+      );
+    }
+
+    return pages;
   };
 
   return (
@@ -45,18 +119,7 @@ export function PaginationClient({
               onClick={() => handlePageChange(currentPage - 1)}
             />
           </PaginationItem>
-          {[...Array(totalPages)].map((_, index) => (
-            <PaginationItem key={index}>
-              <PaginationLink
-                href="#"
-                isActive={currentPage === index + 1}
-                onClick={() => handlePageChange(index + 1)}
-              >
-                {index + 1}
-              </PaginationLink>
-            </PaginationItem>
-          ))}
-          {totalPages > 3 && <PaginationEllipsis />}
+          {renderPaginationItems()}
           <PaginationItem>
             <PaginationNext
               href="#"

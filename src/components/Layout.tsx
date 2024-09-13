@@ -4,10 +4,10 @@ import { Topbar } from "./Topbar";
 
 export const Layout = () => {
   return (
-    <div className=" flex">
+    <div className=" flex z-0">
       <SideBar />
 
-      <div className="flex flex-col w-full">
+      <div className="flex border flex-col z-30 w-full">
        <Topbar/>
 
         <main className=" w-full h-full">

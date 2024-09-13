@@ -1,11 +1,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { cn, getRelativeTime } from "../../lib/utils";
-import { useState } from "react";
 import { useBoolean } from "usehooks-ts";
-import CellAction from "../common/CellAction";
-import EmployeeModal from "../common/Modal";
-import { ExtraFeesForm } from "../extrafees/extra-fees-form";
 import { useNavigate } from "react-router-dom";
+import { AlignEndHorizontal } from "lucide-react";
 
 export type Trips = {
   __typename: "trips";
@@ -135,25 +132,17 @@ export const columns: ColumnDef<Trips>[] = [
     header: () => {
       return (
         <div className="h-full bg-zinc-50  flex items-center justify-center">
-          <p className="font-bold text-zinc-500 text-center">Action</p>
+          <p className="font-bold text-zinc-500 text-center">Details</p>
         </div>
       );
     },
     cell: ({ row }) => {
-      const [setDeleteData] = useState<any>();
+
       const navigate = useNavigate();
 
-      const [singleDriverData] = useState<any>({
-        address: "",
-        balance: "",
-        birth_date: "",
-        created_at: "",
-        disabled: null,
-        driver_id: "",
-      });
+     
 
-      const { toggle: dToggle } = useBoolean(false);
-      const { value, toggle } = useBoolean(false);
+      const {  toggle } = useBoolean(false);
 
       const handleEdit = (row: any) => {
         const RowData = row.original;
@@ -165,30 +154,7 @@ export const columns: ColumnDef<Trips>[] = [
 
       return (
         <div className={"flex justify-center "}>
-          <CellAction
-            language="section"
-            isDelete={false}
-            isEdit={false}
-            isDetails
-            setSingleCodeGenerator={setDeleteData}
-            handleDelete={() => dToggle()}
-            handleEdit={handleEdit}
-            row={row}
-          />
-          <EmployeeModal
-            title={"Extra Fees Detail"}
-            modelRatio="w-[100svw] lg:w-[650px]"
-            editMode={true}
-            open={value}
-            toggle={toggle}
-            form={
-              <ExtraFeesForm
-                editMode
-                editData={singleDriverData || []}
-                toggle={toggle}
-              />
-            }
-          />
+          <AlignEndHorizontal color="#f7b39e" className="hover:scale-110" onClick={()=>handleEdit(row)}/>
         </div>
       );
     },

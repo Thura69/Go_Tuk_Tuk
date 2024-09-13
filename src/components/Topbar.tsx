@@ -8,7 +8,7 @@ import NIGHT from '../assets/lantern-night-svgrepo-com.svg';
 export const Topbar = () => {
   const {  timeOfDay } = useTimeOfDay();
   return (
-    <div className="h-[82px] border-b flex items-center justify-end px-[30px]">
+    <div className="h-[65px] border-b flex items-center justify-end px-[30px]">
       <div>
          {
            timeOfDay === 'morning' && <img className="w-8 h-8" src={MORNING}/>

@@ -134,7 +134,7 @@ export const Dashboard = () => {
   }, [CUSTOMERDATA, DRIVERSDATA, VECICLEDATA, ALLDRIVERS, ALLCUSTOMERS]);
 
   return (
-    <div className="p-[30px] space-y-4 min-h-[calc(100svh-81px)]  bg-gray-100">
+    <div className="p-[10px] space-y-4 min-h-[calc(100svh-81px)]  bg-gray-100">
       <div className="flex gap-5 justify-between ">
         <div className="p-5 bg-white rounded-lg border text-[#423F7A]  font-bold  w-[100%] flex flex-col justify-between">
           <h3>Today Summary</h3>

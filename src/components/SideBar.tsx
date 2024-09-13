@@ -4,13 +4,14 @@ import { cn } from "../lib/utils";
 import LOGO from "../assets/Group 47556.svg";
 import { Separator } from "../components/ui/separator";
 import useMenus from "../lib/UseMenus";
-import { ScrollArea } from "./ui/scroll-area";
 import { LogOut, Settings } from "lucide-react";
 import { Switch } from "./ui/switch";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { Tooltip } from "react-tooltip";
 
 import "react-tooltip/dist/react-tooltip.css";
+
 
 export const SideBar = () => {
   const [open, setOpen] = useState(false);
@@ -28,58 +29,65 @@ export const SideBar = () => {
   return (
     <div
       className={cn(
-        "   bg-gray-50 relative  flex flex-col duration-500 w-[80px] ",
-        open && "w-[250px]"
+        "   bg-gray-50 relative   z-[1000] flex  flex-col  w-[60px] ",
+        open && "w-[200px]"
       )}
     >
-      <div className="p-3  gap-5  flex items-center justify-start">
+      <div className="p-2  gap-5 h-[60px] flex items-center justify-start">
         <Button
           onClick={() => setOpen((prev) => !prev)}
-          className=" rounded-md  border-sky-500 p-0 w-[50px] h-[50px]  border-[1px] bg-sky-500"
+          className=" rounded-sm  border-sky-500 p-0  bg-sky-500 w-full  "
           type="button"
           variant={"outline"}
         >
-          <img src={LOGO} className="w-[30px] h-[30px]" alt="logo" />
+          <img src={LOGO} className="w-[20px] h-[20px]" alt="logo" />
         </Button>
       </div>
       <Separator />
 
-      <ScrollArea className="p-3">
+      <div className=" p-2  z-0">
         <div className="h-[30px] text-start ml-5 text-gray-400 text-sm">
           {open && <p>Menus</p>}
         </div>
-        <div className=" space-y-1">
+        <div className="  z-0 space-y-1">
           {MENUS.map((e, index) => (
             <Button
+              id={`my-anchor-element-${index}`}
               key={index}
               onClick={() => navigate(`${e.path}`)}
               className={cn(
-                "  rounded-md border-none drop-shadow-none p-0 w-full  h-[30px]  shadow-none bg-gray-50 flex justify-start hover:bg-gray-50  gap-4 ",
+                "   relative border-none drop-shadow-none p-0 w-full   shadow-none bg-gray-50  flex gap-1 justify-start hover:bg-gray-200 border-2  rounded-[2px]  duration-200   ",
                 location.pathname === e.path &&
-                  "bg-sky-300 hover:bg-sky-400 rounded text-white"
+                  "bg-sky-300/80 hover:bg-sky-300   rounded-[2px]  text-white"
               )}
               type="button"
               variant={"outline"}
             >
-              {e.icon}
+           <div className=" overflow-hidden  w-[43px] flex items-center justify-center  ">   {e.icon}</div>
 
-              {/* <Tooltip style={{ zIndex: 1000 }} content={e.name}>
-                Hello
-              </Tooltip> */}
-              {open && (
+              {!open ? (
+                <Tooltip
+                  style={{ zIndex: 1000,backgroundColor:'#2c3e50' }}
+                  className="bg-blue-400"
+                  place="top"
+                  anchorSelect={`#my-anchor-element-${index}`}
+                  content={e.name}
+                />
+              ) : null}
                 <p
-                  className={cn(
-                    "text-gray-500",
-                    location.pathname === e.path && "text-white"
+                  className={cn( 
+                    "text-gray-500 duration-1000 overflow-hidden  w-0",
+                    location.pathname === e.path && "text-white",
+                    open && 'w-auto'
+                    
                   )}
                 >
                   {e.name}
                 </p>
-              )}
             </Button>
           ))}
           <div className="pt-[65px] space-y-1">
-            <div className="h-[30px] text-start ml-5 text-gray-400 text-sm">
+            <div className="h-[30px] text-start ml-5 overflow-hidden text-gray-400 text-sm">
               {open && <p>Account</p>}
             </div>
             <Button
@@ -87,7 +95,7 @@ export const SideBar = () => {
               type="button"
               variant={"outline"}
             >
-              <Settings className=" ml-4 text-gray-400 w-[20px] " />
+              <Settings className=" ml-3 text-gray-400 w-[20px] " />
               {open && <p className="text-gray-500">Settings</p>}
             </Button>
             <Button
@@ -97,7 +105,7 @@ export const SideBar = () => {
             >
               <LogOut
                 onClick={handleLogOut}
-                className=" ml-4 text-gray-400 w-[20px] "
+                className=" ml-3 text-gray-400 w-[20px] "
               />
               {open && <p className="text-gray-500">Log Out</p>}
             </Button>
@@ -110,7 +118,7 @@ export const SideBar = () => {
             </Button>
           </div>
         </div>
-      </ScrollArea>
+      </div>
     </div>
   );
 };
