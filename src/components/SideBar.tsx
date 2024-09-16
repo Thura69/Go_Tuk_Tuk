@@ -94,20 +94,39 @@ export const SideBar = () => {
               className=" rounded-md border-none drop-shadow-none p-0 w-full  h-[30px]  shadow-none bg-gray-50 flex justify-start  gap-4 "
               type="button"
               variant={"outline"}
+              id={`setting`}
             >
               <Settings className=" ml-3 text-gray-400 w-[20px] " />
               {open && <p className="text-gray-500">Settings</p>}
+
+              {!open ? (
+                <Tooltip
+                  style={{ zIndex: 1000,backgroundColor:'#2c3e50' }}
+                  className="bg-blue-400"
+                  place="top"
+                  anchorSelect={`#setting`}
+                  content={"Settings"}
+                /> ): null}
             </Button>
             <Button
               className=" rounded-md border-none drop-shadow-none p-0 w-full  h-[30px]  shadow-none bg-gray-50 flex justify-start  gap-4 "
               type="button"
               variant={"outline"}
+              id={`logout`}
             >
               <LogOut
                 onClick={handleLogOut}
                 className=" ml-3 text-gray-400 w-[20px] "
               />
               {open && <p className="text-gray-500">Log Out</p>}
+              {!open ? (
+                <Tooltip
+                  style={{ zIndex: 1000,backgroundColor:'#2c3e50' }}
+                  className="bg-blue-400"
+                  place="top"
+                  anchorSelect={`#logout`}
+                  content={"Log Out"}
+                /> ): null}
             </Button>
             <Button
               className=" rounded-md border-none drop-shadow-none p-0 w-full  h-[30px]  shadow-none bg-gray-50 flex justify-start  gap-4 "

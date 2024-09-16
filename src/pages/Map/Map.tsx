@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Map, AdvancedMarker } from "@vis.gl/react-google-maps";
 import { io } from "socket.io-client";
 import TUKTUK from "../../assets/Location icon.svg";
-
+import { DetailDriver } from "../../components/map/DetailDriver";
+import { DriverFilter } from "../../components/map/DriverFilter";
 
 type Driver = {
   socketId: string;
@@ -29,18 +30,50 @@ type Poi = {
   key: string;
   photo: string;
   licenseNo: string;
+  name: string;
+  phone: string;
+  online: boolean;
+  status: string;
   location: google.maps.LatLngLiteral;
 };
 
 const PoiMarkers = (props: { pois: Poi[] }) => {
+  const [showContent, setShowContent] = useState<{ [key: string]: boolean }>(
+    {}
+  );
+
+  const handleMarkerClick = (poiKey: string) => {
+    setShowContent((prev) => ({
+      ...prev,
+      [poiKey]: !prev[poiKey], // Toggle visibility for the clicked marker
+    }));
+  };
   return (
     <>
       {props.pois.map((poi: Poi) => (
-        <AdvancedMarker key={poi.key} position={poi.location}>
+        <AdvancedMarker
+          clickable
+          onClick={() => handleMarkerClick(poi.key)}
+          key={poi.key}
+          className="z-[100]"
+          position={poi.location}
+        >
           <div
             id={poi.key}
-            className="relative flex items-center justify-center"
+            className="relative z-20 flex items-center justify-center"
           >
+            {showContent[poi.key] && (
+              <DetailDriver
+                key={poi.key}
+                phone={poi.phone}
+                name={poi.name}
+                photo={poi.photo}
+                licenseNo={poi.licenseNo}
+                online={poi.online}
+                status={poi.status}
+                location={poi.location}
+              />
+            )}
             <img className="w-[50px]" src={TUKTUK} alt="tuktuk" />
             <img
               className="w-[40px] h-[40px] rounded-full top-[5.5px] absolute"
@@ -53,9 +86,6 @@ const PoiMarkers = (props: { pois: Poi[] }) => {
             />
           </div>
           {/* Tooltip for displaying the driver's license number */}
-          <div className="absolute bottom-[60px] left-1/2 transform -translate-x-1/2 p-2 bg-white shadow-md rounded-md text-sm text-black">
-            {poi.licenseNo}
-          </div>
         </AdvancedMarker>
       ))}
     </>
@@ -71,11 +101,15 @@ export const Maps = () => {
 
     // Listen for real-time driver location updates
     socket.on("allDriverLocation", (data: Driver[]) => {
+      console.log({ data });
       const updatedLocations: Poi[] = data.map((driver: Driver) => ({
         key: driver.driver.id, // Use unique driver id for marker key
         photo: driver.driver.profile_picture_url,
         licenseNo: driver.driver.vehicle_number,
-
+        name: driver.driver.name,
+        phone: driver.driver.phone,
+        online: driver.driver.is_online,
+        status: driver.driver.status,
         location: {
           lat: driver.gps.latitude,
           lng: driver.gps.longitude,
@@ -91,20 +125,25 @@ export const Maps = () => {
     };
   }, []);
 
+  
+
   return (
     <div className="p-3 bg-gray-100">
-      <div className="p-3 bg-white">
-        <Map
-          defaultZoom={13}
+     <div className="flex gap-4">
+     <DriverFilter/>
+     <div className="p-3 w-full bg-white">
+       <Map
+          defaultZoom={6}
           mapId={"bf51a910020fa25a"}
-          className="h-[calc(100svh-81px)]"
-          defaultCenter={{ lat: 21.97473, lng: 96.08359 }}
+          className="h-[calc(100svh-81px)] "
+          defaultCenter={{ lat: 21.9162, lng: 95.956 }}
         >
           <PoiMarkers pois={locations} />{" "}
           {/* Markers are rendered based on real-time data */}
         </Map>
+       </div>
+     </div>
       </div>
-    </div>
   );
 };
 
