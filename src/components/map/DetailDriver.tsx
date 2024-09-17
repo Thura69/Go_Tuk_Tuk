@@ -25,10 +25,10 @@ export const DetailDriver: React.FC<driverType> = ({
   return (
     <div
       key={key}
-      className="w-[200px] absolute top-[-300px] h-auto bg-white border border-gray-300 rounded-lg shadow-lg z-[1000] p-3 flex flex-col items-center space-y-4 "
+      className="w-[200px] absolute top-[-255px] h-[250px] bg-white border border-gray-300 rounded-lg shadow-lg z-[1000] p-3 flex flex-col items-center space-y-1 "
     >
       {/* Driver Photo with Status Indicator */}
-      <div className="relative w-[80px] rounded-full h-[80px]  border border-gray-300">
+      <div className="relative w-[70px] rounded-full h-[70px]  border border-gray-300">
         <img
           src={photo || TUKTUK}
           alt={name}
@@ -48,7 +48,7 @@ export const DetailDriver: React.FC<driverType> = ({
       </div>
 
       {/* Driver Details with Icons */}
-      <div className="space-y-3 w-full px-2">
+      <div className="space-y-2 w-full px-2">
         {/* Phone */}
         <div className="flex items-center space-x-2">
           <PhoneIcon className="w-5 h-5 text-gray-500" />
@@ -78,10 +78,10 @@ export const DetailDriver: React.FC<driverType> = ({
       </div>
 
       {/* Divider */}
-      <div className="w-full border-t border-gray-200"></div>
+      <div className="w-full border-t border-gray-200 "></div>
 
       {/* Action Buttons */}
-      <div className="w-full flex justify-around items-center space-x-2">
+      <div className="w-full flex  justify-around items-center space-x-2">
         <Button disabled className="flex-grow bg-sky-500 text-white py-2 px-4 rounded shadow-md font-light text-sm hover:bg-sky-600 transition-colors">
           Call
         </Button>

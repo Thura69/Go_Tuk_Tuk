@@ -130,12 +130,12 @@ export const Maps = () => {
   return (
     <div className="p-3 bg-gray-100">
      <div className="flex gap-4">
-     <DriverFilter/>
+     <DriverFilter />
      <div className="p-3 w-full bg-white">
        <Map
           defaultZoom={6}
           mapId={"bf51a910020fa25a"}
-          className="h-[calc(100svh-81px)] "
+          className="h-[calc(100svh-120px)] "
           defaultCenter={{ lat: 21.9162, lng: 95.956 }}
         >
           <PoiMarkers pois={locations} />{" "}
