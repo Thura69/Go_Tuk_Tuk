@@ -12,6 +12,7 @@ import {
   GET_ALL_INITIAL_FEES,
   UPDATE_TOPUP_FEES_BY_ID,
 } from "../../graphql/setupfees";
+import DropDownDataField from "../forms/DropDownField";
 
 type Fees = {
   id?: string;
@@ -35,6 +36,12 @@ const fieldHeight = "h-[40px] md:h-[44px] ";
 const filedWidth = "md:w-[calc(50%-10px)] w-full";
 const formContainer =
   "flex flex-col md:flex-row   justify-between items-center";
+
+export const additionalData = [
+  { label: "Percentage", value: "percentage" },
+  { label: "Fixed", value: "fixed" },
+
+];
 
 export const SetUpFeesForm: React.FC<SetupFeesType> = ({
   editData,
@@ -177,7 +184,7 @@ export const SetUpFeesForm: React.FC<SetupFeesType> = ({
               />
             </div>
             <div className={formContainer}>
-              <InputField
+              {/* <InputField
                 disabled={editMode ? true : false}
                 labelTitle="Commission Rate Type"
                 fieldName="commission_rate_type"
@@ -186,6 +193,17 @@ export const SetUpFeesForm: React.FC<SetupFeesType> = ({
                 languageName={"career"}
                 fieldHeight={cn(" w-full", fieldHeight)}
                 fieldWidth={filedWidth}
+              /> */}
+              <DropDownDataField
+                disabled={editMode ? true : false}
+                labelTitle="Commission Rate Type"
+                fieldName="commission_rate_type"
+                required={false}
+                requiredLabel={true}
+                languageName={"career"}
+                fieldHeight={cn(" w-full", fieldHeight)}
+                fieldWidth={filedWidth}
+                additionalData={additionalData}
               />
               <InputField
                 disabled={editMode ? true : false}
@@ -198,6 +216,7 @@ export const SetUpFeesForm: React.FC<SetupFeesType> = ({
                 fieldHeight={cn(" w-full", fieldHeight)}
                 fieldWidth={filedWidth}
               />
+            
             </div>
             <ModalConfirmBtns
               size={"lg"}
