@@ -29,7 +29,7 @@ export const SideBar = () => {
   return (
     <div
       className={cn(
-        "   bg-gray-50 relative   z-[1000] flex  flex-col  w-[60px] ",
+        "   bg-gray-50 relative   z-[50] flex  flex-col  w-[60px] ",
         open && "w-[200px]"
       )}
     >
