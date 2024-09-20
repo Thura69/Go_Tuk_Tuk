@@ -2,7 +2,7 @@ import { Form } from "../ui/form";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+
 import InputField from "../forms/InputField";
 import { cn } from "../../lib/utils";
 import ModalConfirmBtns from "../common/ModalConfirmBtns";
@@ -28,11 +28,10 @@ export const additionalData = [
 ];
 
 export const AddTopUpForm: React.FC<UserFormType> = ({
-  editData,
   toggle,
   editMode,
 }) => {
-  const { data, loading } = useQuery(GET_ALL_DRIVERS, {
+  const { data } = useQuery(GET_ALL_DRIVERS, {
     fetchPolicy: "network-only",
   });
 
@@ -57,9 +56,9 @@ export const AddTopUpForm: React.FC<UserFormType> = ({
     resolver: yupResolver(FormSchema),
   });
 
-  const handleOnSave = async (data: any) => {
+  const handleOnSave = async () => {
 
-    
+
     toggle();
   };
 
