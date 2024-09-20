@@ -40,7 +40,6 @@ const formContainer =
 export const additionalData = [
   { label: "Percentage", value: "percentage" },
   { label: "Fixed", value: "fixed" },
-
 ];
 
 export const SetUpFeesForm: React.FC<SetupFeesType> = ({
@@ -184,16 +183,6 @@ export const SetUpFeesForm: React.FC<SetupFeesType> = ({
               />
             </div>
             <div className={formContainer}>
-              {/* <InputField
-                disabled={editMode ? true : false}
-                labelTitle="Commission Rate Type"
-                fieldName="commission_rate_type"
-                placeholder={"Type Here"}
-                required={false}
-                languageName={"career"}
-                fieldHeight={cn(" w-full", fieldHeight)}
-                fieldWidth={filedWidth}
-              /> */}
               <DropDownDataField
                 disabled={editMode ? true : false}
                 labelTitle="Commission Rate Type"
@@ -216,7 +205,6 @@ export const SetUpFeesForm: React.FC<SetupFeesType> = ({
                 fieldHeight={cn(" w-full", fieldHeight)}
                 fieldWidth={filedWidth}
               />
-            
             </div>
             <ModalConfirmBtns
               size={"lg"}

@@ -8,7 +8,8 @@ const EmployeeInformationDrop = ({
     languageTitle,
     placeHolder,
     fieldName,
-    disabled =  false
+    disabled =  false,
+    two
 }: {
     InputHi: string
     additionalData: object
@@ -17,6 +18,7 @@ const EmployeeInformationDrop = ({
     fieldName: string,
     placeHolder?:string,
     disabled?:boolean
+    two?:boolean
 }) => {
 
     const [popoverOpen, setPopoverOpen] = useState(false);
@@ -32,6 +34,7 @@ const EmployeeInformationDrop = ({
             additionalData={additionalData}
             fieldName={fieldName}
             field={field}
+            two={two}
         />
     )
 }

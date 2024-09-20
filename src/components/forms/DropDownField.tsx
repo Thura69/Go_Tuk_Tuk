@@ -2,6 +2,7 @@ import EmployeeInformationDrop from "../../components/common/MultidropDown";
 import { FormField, FormLabel, FormItem } from "../../components/ui/form";
 import React from "react";
 import { useFormContext } from "react-hook-form";
+import { cn } from "../../lib/utils";
 
 interface DropDownFieldProps {
   fieldName: string;
@@ -9,11 +10,12 @@ interface DropDownFieldProps {
   languageName: string;
   fieldHeight: string;
   fieldWidth: string;
-  labelTitle:string;
+  labelTitle: string;
   additionalData: { label: string; value: string }[];
   requiredLabel?: boolean;
   placeHolder?: string;
   disabled?: boolean;
+  two?: boolean;
 }
 
 const DropDownDataField: React.FC<DropDownFieldProps> = ({
@@ -23,6 +25,7 @@ const DropDownDataField: React.FC<DropDownFieldProps> = ({
   labelTitle,
   fieldHeight,
   fieldWidth,
+  two = true,
   additionalData,
   placeHolder,
   requiredLabel = true,
@@ -35,9 +38,9 @@ const DropDownDataField: React.FC<DropDownFieldProps> = ({
       control={form.control}
       name={fieldName}
       render={({ field }) => (
-        <FormItem className={fieldWidth}>
+        <FormItem className={cn(fieldWidth, "space-y-[1px] mt-[-4px]")}>
           {requiredLabel && (
-            <FormLabel className="font-light">
+            <FormLabel className="font-light ">
               {labelTitle}{" "}
               {required && <span className="ms-1 text-danger-500">*</span>}
             </FormLabel>
@@ -50,6 +53,7 @@ const DropDownDataField: React.FC<DropDownFieldProps> = ({
             additionalData={additionalData || []}
             fieldName={fieldName}
             field={field}
+            two={two}
           />
         </FormItem>
       )}

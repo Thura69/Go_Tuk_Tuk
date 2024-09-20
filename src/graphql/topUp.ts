@@ -29,3 +29,21 @@ export const GET_ALL_TOPUPS = gql`
     }
   }
 `;
+
+
+export const UPDATE_DRIVER_BY_ID = gql`
+  mutation MyMutation(
+    $id: uuid!
+    $disabled: Boolean!
+    $driver_id: String = ""
+  ) {
+    update_drivers_by_pk(
+      pk_columns: { id: $id }
+      _set: { disabled: $disabled, driver_id: $driver_id }
+    ) {
+      disabled
+      driver_id
+    }
+  }
+`;
+

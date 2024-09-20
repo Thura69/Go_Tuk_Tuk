@@ -27,6 +27,7 @@ interface MultiSelectDropProps {
   placeHolder?: string;
   height?: string;
   disabled?: boolean;
+  two?: boolean;
 }
 
 export const MultiSelectDrop: React.FC<MultiSelectDropProps> = ({
@@ -38,6 +39,7 @@ export const MultiSelectDrop: React.FC<MultiSelectDropProps> = ({
   fieldName,
   height,
   disabled = false,
+  two,
 }) => {
   const form = useFormContext();
 
@@ -51,9 +53,9 @@ export const MultiSelectDrop: React.FC<MultiSelectDropProps> = ({
             variant="outline"
             role="combobox"
             className={cn(
-              `w-full border-[1px] disabled:bg-[#F1F5FB] disabled:opacity-100 disabled:border-none border-[#A0AEC0]  text-sideMenuTextColor2 disabled:text-secondaryTextColor  justify-between focus:ring-primary-500 focus:ring-offset-2 focus:ring-2`,
-              !field.value && "text-[#A0AEC0]",
-              height
+              `w-full border-[1px]  disabled:bg-[#F1F5FB] disabled:opacity-100 disabled:border-none border-[#A0AEC0]  text-sideMenuTextColor2 disabled:text-secondaryTextColor  justify-between focus:ring-primary-500 focus:ring-offset-2 focus:ring-2`,
+              height,
+              !field.value && "text-[#A0AEC0]"
             )}
           >
             {field.value ? (
@@ -70,30 +72,70 @@ export const MultiSelectDrop: React.FC<MultiSelectDropProps> = ({
           </Button>
         </FormControl>
       </PopoverTrigger>
-      <PopoverContent className={cn(` w-[500px] max-w-[700px] p-0`)}>
+      <PopoverContent className={cn(` w-300px] max-w-[700px] p-0`)}>
         <Command className="">
           <CommandInput placeholder={"Search"} className="h-9" />
           <CommandList className="">
             <CommandEmpty>No item found.</CommandEmpty>
             <CommandGroup>
-              {additionalData.map((item: any) => (
-                <CommandItem
-                  value={item.label}
-                  key={item.value}
-                  onSelect={() => {
-                    form.setValue(fieldName, item.value);
-                    setPopoverOpen(false);
-                  }}
-                >
-                  {item.label}
-                  <CheckIcon
-                    className={cn(
-                      "ml-auto h-4 w-4",
-                      item.value === field.value ? "opacity-100" : "opacity-0"
-                    )}
-                  />
-                </CommandItem>
-              ))}
+              {two && (
+                <div>
+                  <div className="flex justify-between  font-light my-3 text-sm  w-[90%] ">
+                    <span className="ml-4">ID</span>
+                    <span>Name</span>
+                  </div>
+                  {additionalData.map((item: any) => (
+                    <CommandItem
+                      value={item.label}
+                      key={item.value}
+                      onSelect={() => {
+                        form.setValue(fieldName, item.value);
+                        setPopoverOpen(false);
+                      }}
+                    >
+                      <div className="flex justify-between  w-[90%] ">
+                      <span>{item.label}</span>
+                        <span>{item.value}</span>
+                     
+                      </div>
+
+                      <CheckIcon
+                        className={cn(
+                          "ml-auto h-4 w-4",
+                          item.value === field.value
+                            ? "opacity-100"
+                            : "opacity-0"
+                        )}
+                      />
+                    </CommandItem>
+                  ))}
+                </div>
+              )}
+              {!two && (
+                <div>
+                  {additionalData.map((item: any) => (
+                    <CommandItem
+                      value={item.label}
+                      key={item.value}
+                      onSelect={() => {
+                        form.setValue(fieldName, item.value);
+                        setPopoverOpen(false);
+                      }}
+                    >
+                      <span>{item.label}</span>
+
+                      <CheckIcon
+                        className={cn(
+                          "ml-auto h-4 w-4",
+                          item.value === field.value
+                            ? "opacity-100"
+                            : "opacity-0"
+                        )}
+                      />
+                    </CommandItem>
+                  ))}
+                </div>
+              )}
             </CommandGroup>
           </CommandList>
         </Command>

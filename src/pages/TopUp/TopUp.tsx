@@ -6,17 +6,17 @@ import { useQuery } from "@apollo/client";
 import { useMemo, useState } from "react";
 import { PaginationClient } from "../../components/common/Pagination";
 import { GET_ALL_TOPUPS } from "../../graphql/topUp";
+import EmployeeModal from "../../components/common/Modal";
+import { AddTopUpForm } from "../../components/topup/addTopUp";
 
 export const TopUp = () => {
-  const { toggle } = useBoolean(false);
+  const { value, toggle } = useBoolean(false);
   const { data, loading } = useQuery(GET_ALL_TOPUPS, {
     fetchPolicy: "network-only",
   });
 
-
   const memorizedData = useMemo(() => data?.driver_transactions || [], [data]);
   const [currentTableData, setCurrentTableData] = useState(memorizedData);
-
 
   const updateTableData = (paginatedData: any) => {
     setCurrentTableData(paginatedData);
@@ -29,7 +29,7 @@ export const TopUp = () => {
         modalTrue={() => {
           toggle();
         }}
-        isWrite={false}
+        isWrite={true}
         subTitle={true}
       />
       <DataTable
@@ -45,6 +45,14 @@ export const TopUp = () => {
           itemsPerPage={8} // Set initial data size to 8 items
         />
       </div>
+      <EmployeeModal
+        title={"Add Top"}
+        modelRatio="w-[100svw] lg:w-[650px]"
+        editMode={false}
+        open={value}
+        toggle={toggle}
+        form={<AddTopUpForm editMode={false} toggle={toggle} />}
+      />
     </div>
   );
 };
