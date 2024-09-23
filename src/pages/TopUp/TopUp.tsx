@@ -1,24 +1,24 @@
 import { useBoolean } from "usehooks-ts";
 import TableFrame from "../../components/common/TableFrame";
-import { DataTable } from "../../components/tables/Data-table";
-import { columns } from "../../components/topup/columns";
 import { useQuery } from "@apollo/client";
 import { useMemo, useState } from "react";
 import { PaginationClient } from "../../components/common/Pagination";
 import { GET_ALL_TOPUPS } from "../../graphql/topUp";
 import EmployeeModal from "../../components/common/Modal";
 import { AddTopUpForm } from "../../components/topup/addTopUp";
+import { DataTableDemo } from "../../components/topup/DataTable";
 
 export const TopUp = () => {
   const { value, toggle } = useBoolean(false);
-  const { data, loading } = useQuery(GET_ALL_TOPUPS, {
+  const { data } = useQuery(GET_ALL_TOPUPS, {
     fetchPolicy: "network-only",
   });
 
   const memorizedData = useMemo(() => data?.driver_transactions || [], [data]);
+
   const [currentTableData, setCurrentTableData] = useState(memorizedData);
 
-  const updateTableData = (paginatedData: any) => {
+  const updateTableData = (paginatedData: unknown) => {
     setCurrentTableData(paginatedData);
   };
 
@@ -29,15 +29,16 @@ export const TopUp = () => {
         modalTrue={() => {
           toggle();
         }}
-        isWrite={true}
+        isWrite={false}
         subTitle={true}
       />
-      <DataTable
+      {/* <DataTable
         className="with-action-column"
         columns={columns}
         loading={loading}
         data={currentTableData || []}
-      />
+      /> */}
+      <DataTableDemo data={currentTableData || []} />
       <div className="flex items-start mt-[30px]">
         <PaginationClient
           data={memorizedData || []}

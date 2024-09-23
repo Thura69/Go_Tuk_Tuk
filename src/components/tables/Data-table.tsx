@@ -17,6 +17,7 @@ import {
 import { cn } from "../../lib/utils";
 import TableSekeleton from "./Table-Skeleton";
 
+
 export interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];

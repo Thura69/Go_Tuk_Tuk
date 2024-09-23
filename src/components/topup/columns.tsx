@@ -11,11 +11,12 @@ type Driver = {
   __typename: string;
   name: string;
   phone: string;
+  driver_id:string;
   address: string;
   profile_picture_url: string;
   vehicle_number: string;
   balance: number;
-  bookings: any[]; // You can define a specific type for bookings if needed
+  bookings: unknown[]; // You can define a specific type for bookings if needed
 };
 
 type DriverTransaction = {
@@ -38,6 +39,16 @@ export const columns: ColumnDef<DriverTransaction>[] = [
       return (
         <section className={cn("flex  justify-start  items-center gap-2")}>
           <h3>Name</h3>
+        </section>
+      );
+    },
+  },
+  {
+    accessorKey: "driver.driver_id",
+    header: () => {
+      return (
+        <section className={cn("flex  justify-start  items-center gap-2")}>
+          <h3>Driver ID</h3>
         </section>
       );
     },
@@ -94,7 +105,7 @@ export const columns: ColumnDef<DriverTransaction>[] = [
   },
   {
     accessorKey: "created_at",
-    header: ({}) => {
+    header: () => {
       return (
         <section className={cn("flex  justify-start  items-center gap-2")}>
           <h3>Created Time</h3>
@@ -133,7 +144,9 @@ export const columns: ColumnDef<DriverTransaction>[] = [
       );
     },
     cell: ({ row }) => {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [ setDeleteData] = useState<any>();
+      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [singleDriverData, setSingleDriverData] = useState<any>({
         address: "",
         balance: "",
@@ -143,9 +156,12 @@ export const columns: ColumnDef<DriverTransaction>[] = [
         driver_id: "",
       });
 
+      // eslint-disable-next-line react-hooks/rules-of-hooks
       const {  toggle: dToggle } = useBoolean(false);
+      // eslint-disable-next-line react-hooks/rules-of-hooks
       const { value, toggle } = useBoolean(false);
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const handleEdit = (row: any) => {
         const RowData = row.original;
         setSingleDriverData(RowData);

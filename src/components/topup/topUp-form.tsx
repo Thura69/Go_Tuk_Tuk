@@ -6,6 +6,9 @@ import * as yup from "yup";
 import InputField from "../forms/InputField";
 import { cn } from "../../lib/utils";
 import { Button } from "../ui/button";
+import { useState } from "react";
+import { X } from "lucide-react";
+import Radiofield from "../forms/RadioField";
 
 type UserFormType = {
   editData?: any;
@@ -18,10 +21,8 @@ const filedWidth = "md:w-[calc(50%-10px)] w-full";
 const formContainer =
   "flex flex-col md:flex-row   justify-between items-center";
 
-export const TopUpForm: React.FC<UserFormType> = ({
-  editData,
-  toggle,
-}) => {
+export const TopUpForm: React.FC<UserFormType> = ({ editData, toggle }) => {
+  const [checkReceipt, setCheckReceipt] = useState(false);
   const FormSchema = yup.object({
     name: yup.string(),
     amount: yup.number(),
@@ -41,7 +42,7 @@ export const TopUpForm: React.FC<UserFormType> = ({
     },
   });
 
-  const handleOnSave = async ( ) => {
+  const handleOnSave = async () => {
     toggle();
   };
 
@@ -63,6 +64,28 @@ export const TopUpForm: React.FC<UserFormType> = ({
           />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
+
+        {checkReceipt && (
+          <div className=" w-[500px] top-[-20%] left-[70px]  fixed">
+            <X
+              onClick={() => setCheckReceipt(false)}
+              className=" border hover:scale-110 border-purple-600 bg-white absolute right-2 top-2 cursor-pointer"
+            />
+            <Avatar>
+              <AvatarImage
+                className=" w-auto  object-fill h-auto rounded-md"
+                src={
+                  editData.top_up.receipt_photo_url
+                    ? editData.top_up.receipt_photo_url
+                    : "https://github.com/shadcn.png"
+                }
+                alt="@shadcn"
+              />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+          </div>
+        )}
+
         <div className={formContainer}>
           <InputField
             disabled={true}
@@ -107,6 +130,17 @@ export const TopUpForm: React.FC<UserFormType> = ({
             fieldWidth={filedWidth}
           />
         </div>
+        <Button
+          className="w-full"
+          onClick={() => setCheckReceipt((prev) => !prev)}
+        >
+          Check Receipt
+        </Button>
+        <Radiofield
+          languageName="vaccineEmployee"
+          fieldName={"proofofVaccination"}
+        />
+
         <div className="w-full flex py-2 mt-2  justify-center sm:justify-end gap-2">
           <Button
             type="button"

@@ -11,9 +11,13 @@ export const GET_ALL_TOPUPS = gql`
       status
       created_at
       transaction_number
+      top_up {
+        receipt_photo_url
+      }
       driver {
         name
         phone
+        driver_id
         address
         profile_picture_url
         vehicle_number
@@ -30,7 +34,6 @@ export const GET_ALL_TOPUPS = gql`
   }
 `;
 
-
 export const UPDATE_DRIVER_BY_ID = gql`
   mutation MyMutation(
     $id: uuid!
@@ -46,4 +49,3 @@ export const UPDATE_DRIVER_BY_ID = gql`
     }
   }
 `;
-
