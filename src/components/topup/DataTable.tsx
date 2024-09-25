@@ -38,6 +38,7 @@ import { useBoolean } from "usehooks-ts";
 import CellAction from "../common/CellAction";
 import EmployeeModal from "../common/Modal";
 import { TopUpForm } from "./topUp-form";
+import { AlignEndHorizontal } from "lucide-react";
 
 
 
@@ -167,13 +168,15 @@ export const columns: ColumnDef<DriverTransaction>[] = [
     header: () => {
       return (
         <div className="h-full bg-zinc-50  flex items-center justify-center">
-          <p className="font-bold text-zinc-500 text-center">Action</p>
+          <p className="font-bold text-zinc-500 text-center">Check</p>
         </div>
       );
     },
     cell: ({ row }) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const [setDeleteData] = useState<any>();
+     
+
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const [singleDriverData, setSingleDriverData] = useState<any>({
         address: "",
@@ -199,7 +202,8 @@ export const columns: ColumnDef<DriverTransaction>[] = [
 
       return (
         <div className={"flex justify-center "}>
-          <CellAction
+           <AlignEndHorizontal color="#f7b39e" className="hover:scale-110" onClick={()=>handleEdit(row)}/>
+          {/* <CellAction
             language="section"
             setSingleCodeGenerator={setDeleteData}
             handleDelete={() => dToggle()}
@@ -208,7 +212,7 @@ export const columns: ColumnDef<DriverTransaction>[] = [
             isEdit={false}
             isDetails
             row={row}
-          />
+          /> */}
           <EmployeeModal
             title={"Details Top Up"}
             modelRatio="w-[100svw] lg:w-[650px]"

@@ -16,7 +16,9 @@ export const TopUp = () => {
 
   const memorizedData = useMemo(() => data?.driver_transactions || [], [data]);
 
-  const [currentTableData, setCurrentTableData] = useState(memorizedData);
+  console.log("Thi si me")
+
+  const [currentTableData, setCurrentTableData] = useState([]);
 
   const updateTableData = (paginatedData: unknown) => {
     setCurrentTableData(paginatedData);
@@ -29,7 +31,7 @@ export const TopUp = () => {
         modalTrue={() => {
           toggle();
         }}
-        isWrite={false}
+        isWrite={true}
         subTitle={true}
       />
       {/* <DataTable
@@ -38,7 +40,7 @@ export const TopUp = () => {
         loading={loading}
         data={currentTableData || []}
       /> */}
-      <DataTableDemo data={currentTableData || []} />
+      <DataTableDemo data={memorizedData || []} />
       <div className="flex items-start mt-[30px]">
         <PaginationClient
           data={memorizedData || []}

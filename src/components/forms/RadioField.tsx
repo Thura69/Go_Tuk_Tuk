@@ -11,12 +11,14 @@ import { useFormContext } from 'react-hook-form'
 type RadioFieldProps = {
     languageName:string,
     fieldName:string,
-    disabled?:boolean
+    disabled?:boolean,
+    title:string
 }
 
 const Radiofield:React.FC<RadioFieldProps> = ({
     fieldName,
-    disabled
+    disabled,
+    title
 })=>{
 
     const form = useFormContext();
@@ -29,7 +31,7 @@ const Radiofield:React.FC<RadioFieldProps> = ({
         render={({ field }) => (
             <FormItem className="space-y-3">
                 <FormLabel className="font-light">
-                    {fieldName}
+                    {title}
                 </FormLabel>
                 <FormControl>
                     <RadioGroup
@@ -48,7 +50,7 @@ const Radiofield:React.FC<RadioFieldProps> = ({
                                 />
                             </FormControl>
                             <FormLabel className="font-normal text-slate-400 ">
-                                Yes
+                                Approved
                             </FormLabel>
                         </FormItem>
                         <FormItem className="flex items-center space-x-3 space-y-0">
@@ -61,7 +63,7 @@ const Radiofield:React.FC<RadioFieldProps> = ({
                                 />
                             </FormControl>
                             <FormLabel className="font-normal text-slate-400 ">
-                               No
+                               Reject
                             </FormLabel>
                         </FormItem>
                     </RadioGroup>

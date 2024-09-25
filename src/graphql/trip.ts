@@ -21,6 +21,9 @@ export const GET_ALL_TRIPS = gql`
       extra_fee
       location_points
       waiting_fee
+      driver {
+        name
+      }
     }
   }
 `;

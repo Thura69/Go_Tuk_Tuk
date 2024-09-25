@@ -49,3 +49,13 @@ export const UPDATE_DRIVER_BY_ID = gql`
     }
   }
 `;
+
+export const UPDATE_AMOUNT = gql`
+mutation MyMutation($id: uuid = "", $amount: numeric = "", $status: String = "") {
+  update_driver_transactions_by_pk(pk_columns: {id: $id}, _set: {amount: $amount, status: $status}) {
+    amount
+    status
+  }
+}
+
+`;

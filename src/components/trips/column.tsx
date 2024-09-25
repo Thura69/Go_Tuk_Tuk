@@ -37,6 +37,16 @@ export const columns: ColumnDef<Trips>[] = [
     },
   },
   {
+    accessorKey: "driver.name",
+    header: () => {
+      return (
+        <section className={cn("flex  justify-start  items-center gap-2")}>
+          <h3>Driver Name</h3>
+        </section>
+      );
+    },
+  },
+  {
     accessorKey: "distance_km",
     header: () => {
       return (

@@ -10,6 +10,7 @@ type Driver = {
   driver: {
     id: string;
     name: string;
+    driver_id:string;
     profile_picture_url: string;
     status: string;
     vehicle_number: string;
@@ -43,6 +44,7 @@ const PoiMarkers = (props: { pois: Poi[] }) => {
   );
 
   const handleMarkerClick = (poiKey: string) => {
+
     setShowContent((prev) => ({
       ...prev,
       [poiKey]: !prev[poiKey], // Toggle visibility for the clicked marker
@@ -105,7 +107,7 @@ export const Maps = () => {
       const updatedLocations: Poi[] = data.map((driver: Driver) => ({
         key: driver.driver.id, // Use unique driver id for marker key
         photo: driver.driver.profile_picture_url,
-        licenseNo: driver.driver.vehicle_number,
+        licenseNo: driver.driver.driver_id,
         name: driver.driver.name,
         phone: driver.driver.phone,
         online: driver.driver.is_online,

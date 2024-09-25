@@ -58,7 +58,7 @@ export const DetailDriver: React.FC<driverType> = ({
         {/* License Number */}
         <div className="flex items-center space-x-2">
           <IdCard className="w-5 h-5 text-gray-500" />
-          <span className="text-gray-700">License No: {licenseNo}</span>
+          <span className="text-gray-700">Driver ID: {licenseNo}</span>
         </div>
 
         {/* Online/Offline Status with Icon */}
@@ -82,11 +82,8 @@ export const DetailDriver: React.FC<driverType> = ({
 
       {/* Action Buttons */}
       <div className="w-full flex  justify-around items-center space-x-2">
-        <Button disabled className="flex-grow bg-sky-500 text-white py-2 px-4 rounded shadow-md font-light text-sm hover:bg-sky-600 transition-colors">
-          Call
-        </Button>
-        <Button disabled className="flex-grow bg-green-500 text-white py-2 px-4 rounded shadow-md hover:bg-green-600 text-sm font-thin transition-colors">
-          Message
+        <Button disabled className="flex-grow bg-yellow-500 text-white py-2 px-4 rounded shadow-md font-light text-sm hover:bg-sky-600 transition-colors">
+          Show Route
         </Button>
       </div>
     </div>
