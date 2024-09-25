@@ -6,7 +6,7 @@ import * as yup from "yup";
 import InputField from "../forms/InputField";
 import { cn } from "../../lib/utils";
 import { Button } from "../ui/button";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { X } from "lucide-react";
 import Radiofield from "../forms/RadioField";
 import { useMutation } from "@apollo/client";
@@ -25,7 +25,7 @@ const formContainer =
 
 export const TopUpForm: React.FC<UserFormType> = ({ editData, toggle }) => {
   const [checkReceipt, setCheckReceipt] = useState(false);
-  const [updateService, { loading }] = useMutation(UPDATE_AMOUNT, {
+  const [updateService, ] = useMutation(UPDATE_AMOUNT, {
     refetchQueries: [GET_ALL_TOPUPS],
   });
 

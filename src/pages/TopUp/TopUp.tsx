@@ -16,11 +16,10 @@ export const TopUp = () => {
 
   const memorizedData = useMemo(() => data?.driver_transactions || [], [data]);
 
-  console.log("Thi si me")
 
-  const [currentTableData, setCurrentTableData] = useState([]);
+  const [ setCurrentTableData] = useState<any>([]);
 
-  const updateTableData = (paginatedData: unknown) => {
+  const updateTableData = (paginatedData: any) => {
     setCurrentTableData(paginatedData);
   };
 

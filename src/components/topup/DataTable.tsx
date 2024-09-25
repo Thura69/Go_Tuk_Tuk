@@ -35,7 +35,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { cn, getRelativeTime } from "../../lib/utils";
 import { useState } from "react";
 import { useBoolean } from "usehooks-ts";
-import CellAction from "../common/CellAction";
 import EmployeeModal from "../common/Modal";
 import { TopUpForm } from "./topUp-form";
 import { AlignEndHorizontal } from "lucide-react";
@@ -174,7 +173,6 @@ export const columns: ColumnDef<DriverTransaction>[] = [
     },
     cell: ({ row }) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      const [setDeleteData] = useState<any>();
      
 
       // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -188,7 +186,6 @@ export const columns: ColumnDef<DriverTransaction>[] = [
       });
 
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      const { toggle: dToggle } = useBoolean(false);
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const { value, toggle } = useBoolean(false);
 
