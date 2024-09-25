@@ -10,18 +10,20 @@ import { DataTableDemo } from "../../components/topup/DataTable";
 
 export const TopUp = () => {
   const { value, toggle } = useBoolean(false);
-  const { data } = useQuery(GET_ALL_TOPUPS, {
+  const { data,loading } = useQuery(GET_ALL_TOPUPS, {
     fetchPolicy: "network-only",
   });
 
   const memorizedData = useMemo(() => data?.driver_transactions || [], [data]);
 
 
-  const [ setCurrentTableData] = useState<any>([]);
+  const [ __,setCurrentTableData] = useState<any>([]);
 
   const updateTableData = (paginatedData: any) => {
     setCurrentTableData(paginatedData);
   };
+
+  if(loading) return <div>Loading...</div>
 
   return (
     <div className="p-[30px] min-h-[calc(100svh-81px)]  bg-gray-100">
