@@ -4,18 +4,16 @@ import { cn } from "../../lib/utils";
 import { Separator } from "../ui/separator";
 import { CheckCircleIcon, IdCard, Phone, XCircleIcon } from "lucide-react";
 import { Button } from "../ui/button";
+import { Poi } from "../../types/driver";
 
-type DriverType = {
-  status: "on" | "park" | "driving";
-};
 
-export const DriverListItem: React.FC<DriverType> = ({ status }) => {
+export const DriverListItem: React.FC<Poi> = ({ status,name,phone,photo,licenseNo,online }) => {
   const [detail, setDetail] = useState(false);
 
   return (
     <div
       className={cn(
-        "w-full duration-500 overflow-hidden rounded mb-2 bg-white shadow  pt-[10px]  justify-between h-[50px] px-3 ",
+        "w-full duration-500 overf`low-hidden rounded mb-2 bg-white shadow  pt-[10px]  justify-between h-[50px] overflow-hidden px-3 ",
         detail && "h-[200px] items-start pt-[10px] "
       )}
     >
@@ -27,38 +25,46 @@ export const DriverListItem: React.FC<DriverType> = ({ status }) => {
           <div    onClick={() => setDetail((prev) => !prev)} className=" relative w-[33px] h-[33px] cursor-pointer">
             <img
               className="w-[33px] h-[33px] rounded-full object-cover"
-              src="https://info.drivedifferent.com/hubfs/SMI-BLOG-Ways-to-Improve-Drivers-Happiness%20%281%29.jpg"
+              src={photo ? photo : 'https://info.drivedifferent.com/hubfs/SMI-BLOG-Ways-to-Improve-Drivers-Happiness%20%281%29.jpg'}
             />
             <span
               className={`absolute top-[-4px] right-[-5px] w-4 h-4 rounded-full border-2 border-white ${
                 true ? "bg-green-500" : "bg-red-500"
               }`}
             ></span>
-          </div>
-          <h3 className="text-xs font-semibold">John Cane</h3>
         </div>
-        {status === "on" && (
+          <h3 className="text-xs font-semibold">{name}</h3>
+        </div>
+        {status === "active" && (
           <Badge
             variant={"outline"}
             className="h-[24px] border-green-400 bg-green-200 mt-1 text-xs"
           >
-            On Time
+           Active
           </Badge>
         )}
-        {status === "driving" && (
+        {status === "on trip" && (
           <Badge
             variant={"outline"}
             className="h-[24px] border-yellow-400 bg-yellow-200 mt-1 text-xs"
           >
-            Driving
+            On Trip
           </Badge>
         )}
-        {status === "park" && (
+        {status === "offline" && (
           <Badge
             variant={"outline"}
             className="h-[24px] mt-1 text-xs bg-red-200 border-red-400"
           >
-            Parked
+            Offline
+          </Badge>
+        )}
+         {status === "busy" && (
+          <Badge
+            variant={"outline"}
+            className="h-[24px] mt-1 text-xs bg-red-200 border-red-400"
+          >
+            Busy
           </Badge>
         )}
       </div>
@@ -72,16 +78,16 @@ export const DriverListItem: React.FC<DriverType> = ({ status }) => {
         <div className=" p-2 space-y-2 overflow-hidden">
           <div className="flex items-center text-sm space-x-2">
             <Phone className="w-4 h-4 text-gray-500" />
-            <span className="text-gray-700"> <span className="text-gray-500 text-xs ">Phone No</span>: 09265577722</span>
+            <span className="text-gray-700"> <span className="text-gray-500 text-xs ">Phone No</span>: {phone}</span>
           </div>
 
           <div className="flex items-center text-sm space-x-2">
             <IdCard className="w-4 h-4 text-gray-500" />
-            <span className="text-gray-700"><span className="text-gray-500 text-xs ">License No</span>: 2M 11111</span>
+            <span className="text-gray-700"><span className="text-gray-500 text-xs ">License No</span>: {licenseNo}</span>
           </div>
 
           <div className="flex items-center text-sm space-x-2">
-            {true ? (
+            {online ? (
               <>
                 <CheckCircleIcon className="w-4 h-4 text-xs text-green-500" />
                 <span className="text-green-600">Online</span>

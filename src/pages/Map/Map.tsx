@@ -4,44 +4,16 @@ import { io } from "socket.io-client";
 import TUKTUK from "../../assets/Location icon.svg";
 import { DetailDriver } from "../../components/map/DetailDriver";
 import { DriverFilter } from "../../components/map/DriverFilter";
+import { Driver, Poi } from "../../types/driver";
 
-type Driver = {
-  socketId: string;
-  driver: {
-    id: string;
-    name: string;
-    driver_id:string;
-    profile_picture_url: string;
-    status: string;
-    vehicle_number: string;
-    phone: string;
-    is_online: boolean;
-  };
-  gps: {
-    speed: number;
-    heading: number;
-    altitude: number;
-    accuracy: number;
-    longitude: number;
-    latitude: number;
-  };
-};
 
-type Poi = {
-  key: string;
-  photo: string;
-  licenseNo: string;
-  name: string;
-  phone: string;
-  online: boolean;
-  status: string;
-  location: google.maps.LatLngLiteral;
-};
 
 const PoiMarkers = (props: { pois: Poi[] }) => {
   const [showContent, setShowContent] = useState<{ [key: string]: boolean }>(
     {}
   );
+
+
 
   const handleMarkerClick = (poiKey: string) => {
 
@@ -77,15 +49,17 @@ const PoiMarkers = (props: { pois: Poi[] }) => {
               />
             )}
             <img className="w-[50px]" src={TUKTUK} alt="tuktuk" />
-            <img
+            {
+              poi?.photo &&  <img
               className="w-[40px] h-[40px] rounded-full top-[5.5px] absolute"
               src={
-                poi.photo
-                  ? poi.photo
-                  : "https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png"
+                  poi.photo
               }
-              alt="Driver profile"
+              alt="No Profile"
             />
+            }
+           
+            
           </div>
           {/* Tooltip for displaying the driver's license number */}
         </AdvancedMarker>
@@ -103,7 +77,6 @@ export const Maps = () => {
 
     // Listen for real-time driver location updates
     socket.on("allDriverLocation", (data: Driver[]) => {
-      console.log({ data });
       const updatedLocations: Poi[] = data.map((driver: Driver) => ({
         key: driver.driver.id, // Use unique driver id for marker key
         photo: driver.driver.profile_picture_url,

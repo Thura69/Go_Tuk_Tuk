@@ -149,14 +149,14 @@ export function UsersAndPartners({ chartData }: { chartData: any }) {
             <Area
               dataKey="customers"
               type="natural"
-              fill="url(#fillMobile)"
-              stroke="var(--color-mobile)"
+              fill="#f8ad96"
+              stroke="var(--color-desktop)"
               stackId="a"
             />
             <Area
               dataKey="drivers"
               type="natural"
-              fill="url(#fillDesktop)"
+              fill="#F4E7FF"
               stroke="var(--color-desktop)"
               stackId="a"
             />
