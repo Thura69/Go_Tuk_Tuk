@@ -3,6 +3,7 @@ import { cn, getRelativeTime } from "../../lib/utils";
 import { useBoolean } from "usehooks-ts";
 import { useNavigate } from "react-router-dom";
 import { AlignEndHorizontal } from "lucide-react";
+import { format } from 'date-fns';
 
 export type Trips = {
   __typename: "trips";
@@ -128,11 +129,11 @@ export const columns: ColumnDef<Trips>[] = [
     cell: ({ row }) => {
       const dateString = row.getValue("created_at") as string;
 
-      const relativeTime = getRelativeTime(dateString);
+      const formattedDate = format(new Date(dateString), 'dd/MM/yyyy');
 
       return (
         <div className="">
-          <h3>{relativeTime}</h3>
+          <h3>{formattedDate}</h3>
         </div>
       );
     },
