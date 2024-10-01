@@ -7,6 +7,12 @@ import { useBoolean } from "usehooks-ts";
 import { useState } from "react";
 import EmployeeModal from "../common/Modal";
 import { ExtraFeesForm } from "./extra-fees-form";
+import { DeleteConfirm } from "../common/DeleteConfirmation";
+import { useMutation } from "@apollo/client";
+import {
+  DELETE_EXTRAFEES_BY_ID,
+  GETALL_EXTRAFEES,
+} from "../../graphql/extraFee";
 
 export type ExtraFeesType = {
   __typename: string;
@@ -95,7 +101,10 @@ export const columns: ColumnDef<ExtraFeesType>[] = [
       );
     },
     cell: ({ row }) => {
-      const [setDeleteData] = useState<any>();
+      const [deleteData, setDeleteData] = useState<any>();
+      const [deleteService, { loading }] = useMutation(DELETE_EXTRAFEES_BY_ID, {
+        refetchQueries: [GETALL_EXTRAFEES],
+      });
       const [singleDriverData, setSingleDriverData] = useState<any>({
         address: "",
         balance: "",
@@ -105,8 +114,19 @@ export const columns: ColumnDef<ExtraFeesType>[] = [
         driver_id: "",
       });
 
-      const { toggle: dToggle } = useBoolean(false);
+      const { value: dValue, toggle: dToggle } = useBoolean(false);
       const { value, toggle } = useBoolean(false);
+
+      const handleDelete = async () => {
+        const id = deleteData.original?.id;
+
+        await deleteService({
+          variables: {
+            id: id,
+          },
+        });
+        dToggle();
+      };
 
       const handleEdit = (row: any) => {
         const RowData = row.original;
@@ -115,18 +135,25 @@ export const columns: ColumnDef<ExtraFeesType>[] = [
         toggle();
       };
 
-
       return (
         <div className={"flex justify-center "}>
           <CellAction
             language="section"
-            isDelete={false}
+            isDelete={true}
             isEdit={false}
             isDetails
             setSingleCodeGenerator={setDeleteData}
             handleDelete={() => dToggle()}
             handleEdit={handleEdit}
             row={row}
+          />
+          <DeleteConfirm
+            message={"Do you want to delete Extra Fees?"}
+            title={"Do you want to delete this record permanently?"}
+            isLoading={loading}
+            toggle={dToggle}
+            open={dValue}
+            fun={handleDelete}
           />
           <EmployeeModal
             title={"Extra Fees Detail"}

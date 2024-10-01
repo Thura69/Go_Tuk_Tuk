@@ -538,7 +538,7 @@ export const GET_PARTNERS = gql`
       created_at
       disabled
       email
-      id
+      id?
       name
       phone
     }
