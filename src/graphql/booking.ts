@@ -1,27 +1,28 @@
 import { gql } from "@apollo/client";
 
-export const GET_ALL_TOPUPS = gql`
+export const GET_ALL_BOOKS = gql`
 query MyQuery {
-    bookings {
-      booking_status {
-        name
-      }
-      customer {
-        name
-        password
-        profile_picture_url
-      }
-      driver {
-        name
-        profile_picture_url
-      }
-      trip {
-        start_lat
-        start_lngx
-        total_amount
-      }
+  bookings {
+    customer {
+      name
+      phone
+      profile_picture_url
     }
+    driver {
+      name
+      phone
+      profile_picture_url
+      vehicle_number
+    }
+    trip {
+      total_amount
+      status
+    }
+    start_location
+    end_location
   }
+}
+
   
 `;
 
